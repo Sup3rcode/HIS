@@ -1,0 +1,23 @@
+<table class="table table-bordered" id="labotory-order-list" >
+    <thead>
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">Lab_Test</th>
+      <th class="text-center" scope="col">create_time</th>
+      <th class="text-center" scope="col">Specimens_Arrival_Status</th>
+      <th class="margin-left-0 margin-right-0 text-center" scope="col">Specimens_Arrival_Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for x in data %}
+      <tr>
+        <th class="text-center" scope="row">{{ forloop.counter }}</th>
+        <td class="text-center">{{ x.Lab_Test.test_tybe }}</td>
+        <td class="text-center">{{ x.create_time }}</td>
+        <td class="text-center">{{ x.Specimens_Arrival_Status }}</td>
+        <td style="width: 60%; "><img class="margin-left-0 margin-right-0 text-center" style="width: 40%; " src="{{x.barcode.url}}"/></td>
+      </tr>
+    {% endfor %}
+  
+    </tbody>
+  </table>

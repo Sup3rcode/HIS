@@ -1,0 +1,34 @@
+<div class="row">
+    {% csrf_token %}
+    
+    <div class="form-row ">
+        {% for field in Visit_Order_Form %}
+        <div class="col-md-6 col-md-4">
+            <label class="control-label">{{ field.label }}</label>
+            <div class="form-group has-success">
+                {{ field }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="form-group has-success">
+        <input type="hidden" name="visit_Order_id" maxlength="120" class="form-control"
+            id="visit_Order_id" value="{{data.id}}">
+    </div>
+    <div class="form-group has-success">
+        <input type="hidden" name="patiant_no" maxlength="120" class="form-control"
+            id="patiant_no" value="{{data.patiant_no}}">
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col text-center">
+                <br>
+                <br>
+                <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                    value="Save" />
+            </div>
+        </div>
+
+    </div>
+</div>

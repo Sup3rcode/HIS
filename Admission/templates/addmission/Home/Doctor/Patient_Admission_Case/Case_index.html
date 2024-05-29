@@ -1,0 +1,78 @@
+{% extends '_base.html' %}
+
+{% block breadcrumb %}
+
+
+
+
+{% endblock %}
+
+
+{% block content %}
+<style>
+    .img-medico-4 {
+        background-image: url('/static/assets/images/bg-5.jpg');
+    }
+</style>
+<section class="parallax page-main-heading padding-top-large padding-bottom-large text-white">
+    <div class="parallax_child img-medico-3" style="transform: translate3d(0px, -4.98186px, 0px);"></div>
+    <div class="container position-relative z-index-2">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <h2 class="text-weight-300">{{data.Section_Name}}</h2>
+                <h1>{{Patient_Visited_True2}}</h1>
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-home"></i> zzzzzzzzzz</a></li>
+                    <li class="active">Departement {{data.Section_Name}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="overlay dark-5"></div>
+</section>
+<section class="padding-top-small padding-bottom-small margin-bottom-0">
+    <div class="container margin-bottom-0">
+        <div class="container-fluid light-bg border-light padding-top-small
+            margin-bottom-0 box-shadow-active">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                    <div class="row blog">
+                        <div class="col-md-12">
+                            <div class="blog-text">
+                                <h3 class="title text-capitalize
+                                    margin-bottom-0">{{data.Patient_No.en_patiant_name}}
+                                </h3>
+                              
+                                <h4 class="title text-capitalize
+                                    margin-bottom-0">{{data.Patient_No.ar_patiant_name}}
+                                </h4>
+                                <ul class="meta-tags">
+                                    <li><a>Visit Date: </a><i class="fa
+                                            fa-calendar"></i> <a>{{data.Admission_Case_id.ins_user_date |date:'d-m-Y G:i'}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Gender: </a><i class="fa fa-user"></i>
+                                        <a>{% if data.Patient_No.gender == '1' %} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</a></li>
+                                    <li>|</li>
+                                    <li><a>Nationalty: </a><i class="fa
+                                            fa-tags"></i>
+                                        <a>{{data.Patient_No.country}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Birth Date:
+                                            {{data.Patient_No.birth_date|date:'d-m-Y'}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+
+    {% include 'addmission/Home/Doctor/Patient_Admission_Case/Tab_Service/Tab.html' %}
+
+    {% endblock %}

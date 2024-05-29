@@ -1,0 +1,42 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            
+            <th>ID</th>
+            <th>type</th>
+            <th>Site</th>
+            <th>create time</th>
+            <th>Diagnosis</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody >
+        {% for xr in xray_list %}
+        <tr id="visit_xray">
+            
+            <th >{{ xr.id }}</th>
+            <td>{{ xr.Xray_type.Xray_type }}</td>
+            <td>{{ xr.Xray_Site.Xray_Site }}</td>
+            <td>{{ xr.ins_user_date |date:'d-m-Y G:i' }}</td>
+            <td>{{ xr.Visit_History.Diagnosis }}</td>
+            {% if xr.xray_status == 'Waiting Reception' %}
+            <td class="danger">Waiting Reception</td>
+            
+            {% elif xr.xray_status == 'Waiting Report' %}
+            <td class="warning">Waiting Report </td>
+            
+            <th>
+                <small>assign: {{ xr.Status_Reception_time |date:'d-m-Y H:m G:i'}}</small>
+            </th>
+            {% else %}
+            <td  >            <button class="btn btn-base" onClick="shoe_rep({{xr.id}})">Show Report</button>
+            </td>
+            {% endif %}
+
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<dev id="show_report"> </dev>
+<dev id="show_report2"> </dev>

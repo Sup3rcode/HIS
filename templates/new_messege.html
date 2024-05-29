@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+{% block title %}Start a New Topic{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'concatapp:home' %}">DecetWEB Support</a></li>
+  <li class="breadcrumb-item active">New Message</li>
+{% endblock %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% include 'form.html'%}
+  <button type="submit" class="btn btn-success">Add</button>
+</form>
+{% endblock %}

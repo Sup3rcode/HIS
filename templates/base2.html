@@ -1,0 +1,98 @@
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static 'css/style2.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" />
+    
+    {% block stylesheet %}{% endblock %}
+
+</head>
+<body>
+{%block body%}
+
+<div class="container">
+<ol class="breadcrumb my-4">
+    {% block breadcrumb %}
+    {% endblock %}
+</ol>
+<div class="hbottom">
+    <div>
+        <a href="/" title="الرئيسية" class="logo">
+            <img src="/_layouts/15/MOFInternet/new/images/logo.png" alt="الصفحة الرئيسية">
+        </a>
+        <nav>
+            <div class="t_menu noindex"><div class="slicknav_menu"><a href="#" aria-haspopup="true" tabindex="0" class="slicknav_btn slicknav_collapsed" style="outline: currentcolor none medium;"><span class="slicknav_menutxt">القائمة الرئيسية</span><span class="slicknav_icon"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a><ul class="slicknav_nav slicknav_hidden" style="display: none;" aria-hidden="true" role="menu"><li ref="/about/Pages/default.aspx" class="slicknav_collapsed slicknav_parent"><a href="#" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item slicknav_row" style="outline: currentcolor none medium;"><a class="topLevel" href="/about/Pages/default.aspx" tabindex="-1">عن الوزارة</a><span class="slicknav_arrow"></span></a><ul class="dropdown slicknav_hidden" role="menu" style="display: none;" aria-hidden="true">
+                <ul id="menu"><li ref="/about/Pages/default.aspx"><a class="topLevel" href="/about/Pages/default.aspx">عن الوزارة</a></li></ul>
+            </div>
+        </nav>
+        
+        <span class="clr"></span>
+    </div>
+</div>
+    {% block content %}
+    {% endblock %}
+
+</div>
+{%endblock body%}
+<script src="{%static 'js/jquery-3.4.1.min.js'%}"></script>
+<script src="{%static 'js/popper.min.js'%}"></script>
+<script src="{%static 'js/bootstrap.min.js'%}"></script>
+<script src="{%static 'js/app.js'%}"></script>
+
+</body>
+</html>

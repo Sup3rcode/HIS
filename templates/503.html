@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Page - Error 404 | 24Care</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'select2/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/plugins-min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/menu-overright.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap4-toggle.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap4-toggle.min.css' %}">
+    <link href="{% static 'assets/css/aqua-yellow.css' %}" type="text/css" media="all" rel="stylesheet" id="colors" />
+    <link href="{% static 'assets/css/demo.css' %}" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/cosyAlert.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/cosyAlert.min.css' %}">
+
+</head>
+<body class="switcher_boxed boxed">
+
+    <!-- Begin: HEADER SEARCH -->
+    <div class="modal fade header-search" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="search">
+                <form method="get" action="search.html">
+                    <div class="form-group full-width">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" placeholder="Search Here..." value="" name="q">
+                            <div class="input-group-btn "><button type="submit" class="btn btn-base btn-lg"><i class="fa fa-search"></i></button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End: HEADER SEARCH -->
+
+    <!--
+    #################################
+        - Begin: ERROR 404 -
+    #################################
+    -->
+    <section class="fullscreen">
+        <div class="vertical-content">
+            <div class="fullscreen-setting vertical-content-setting">
+                <div class="container padding-top-medium padding-bottom-medium">
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <h1 class="error-404 text-weight-700 text-uppercase text-size-xlarge">503</h1>
+                            <p class="margin-top-small margin-bottom-small"><h2>sorry You are not allowed to access this page<br>غير مسموح لك بالدخول لهذه الصفحة </h2></p>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <div aria-label="Justified button group" role="group" class="btn-group btn-group-justified">
+                                        <a class="btn btn-default btn-lg btn-block text-weight-700 text-uppercase box-shadow-active" href="{% url 'App_Home:index' %}"><i class="fa fa-arrow-left"></i> Go Home</a>
+                                    </div>
+                                    <div class="row margin-top-small">
+                                        <div class="col-md-12 margin-bottom-small">
+                                            Do you want to be more search...?
+                                        </div>
+                                        <div class="col-md-12">
+                                            <!-- Begin: WIDGET -->
+                                            <div class="widget margin-bottom-large">
+                                                <div class="search">
+                                                    <form class="form-inline">
+                                                        <div class="form-group full-width">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control input-lg" id="exampleInputAmount" placeholder="Search...">
+                                                                <div class="input-group-btn "><button type="submit" class="btn btn-base btn-lg btn-block"><i class="fa fa-search"></i></button></div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <!-- End: WIDGET -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End: ERROR 404 -
+    ################################################################## -->
+
+
+    <!-- Begin: BACK TO TOP -->
+    <a id="back-to-top" href="#" class="back-to-top btn btn-base">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+    <!-- End: BACK TO TOP -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/plugins.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    
+    <!-- SWITCHER | BEGIN -->
+    <div class='style-switcher' id='style-switcher'>
+        <div class='style-switcher-heading'>
+            <!-- SWITCHER COLORS -->
+            <div class='custom_icon'>
+                <i class='fa fa-cog c_rotating'></i>
+            </div>
+        </div>
+        <div class='style-switcher-body'>
+            <div class='style-switcher-colors'>
+                <div class='style-switcher-title'>Color Scheme</div>
+                <a class='style-switcher-color aqua-cherry' data-switch-target='#colors' data-switch-to='aqua-cherry.css' href='#' title="Aqua - Cherry"></a>
+                <a class='style-switcher-color aqua-yellow active' data-switch-default data-switch-target='#colors' data-switch-to='aqua-yellow.css' href='#' title="Aqua - Yellow"></a>
+                <a class='style-switcher-color burgundy-peach' data-switch-target='#colors' data-switch-to='burgundy-peach.css' href='#' title="Burgundy - Peach"></a>
+                <a class='style-switcher-color cherry-green' data-switch-target='#colors' data-switch-to='cherry-green.css' href='#' title="Cherry - Green"></a>
+                <a class='style-switcher-color eggplant-green' data-switch-target='#colors' data-switch-to='eggplant-green.css' href='#' title="Eggplant - Green"></a>
+                <a class='style-switcher-color emerald-peach' data-switch-target='#colors' data-switch-to='emerald-peach.css' href='#' title="Emerald - Peach"></a>
+                <a class='style-switcher-color magenta-green' data-switch-target='#colors' data-switch-to='magenta-green.css' href='#' title="Magenta - Green"></a>
+                <a class='style-switcher-color navy-magenta' data-switch-target='#colors' data-switch-to='navy-magenta.css' href='#' title="Navy - Magenta"></a>
+                <a class='style-switcher-color orange-burgundy' data-switch-target='#colors' data-switch-to='orange-burgundy.css' href='#' title="Orange - Burgundy"></a>
+                <a class='style-switcher-color peach-magenta' data-switch-target='#colors' data-switch-to='peach-magenta.css' href='#' title="Peach - Magenta"></a>
+                <a class='style-switcher-color purple-green' data-switch-target='#colors' data-switch-to='purple-green.css' href='#' title="Purple - Green"></a>
+                <a class='style-switcher-color yellow-gray' data-switch-target='#colors' data-switch-to='yellow-gray.css' href='#' title="Yellow - Gray"></a>
+            </div>
+            <div class='style-switcher-reset'>
+                <a class='style-switcher-button' data-switch-target='#style-switcher' data-switch-to='reset:defaults' href='#' title="">Reset to defaults</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap4-toggle.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap4-toggle.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/plugins/switcher/js/demo.js' %}"></script>
+    <script src="{% static 'assets/plugins/switcher/js/jquery.cookie.js' %}"></script>
+    <script src="{% static 'assets/js/select2.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/js/cosyAlert.js' %}"></script>
+</body>
+</html>

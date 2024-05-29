@@ -1,0 +1,57 @@
+<header class="main-header sticky-header box-shadow-active">
+    <nav class="navbar navbar-default">
+        <div class="container position-relative">
+            <div class="navbar-header border">
+                <button type="button" class="navbar-toggle" data-toggle="modal" data-target=".header-search">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-search"></i>
+                </button>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#nav-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand logo" href="{% url 'App_Home:index' %}"><span><i
+                            class="fa fa-heartbeat"></i></span>
+                    24Care</a>
+            </div>
+            <div class="collapse navbar-collapse pull-right search-shop-dropdown" id="nav-navbar-collapse-2">
+                <ul class="nav navbar-nav navbar-right margin-right-0">
+                    <li class="dropdown search-dropdown hidden-xs hidden-sm"> <a href="#" class="" data-toggle="modal"
+                            data-target=".header-search"><i class="fa fa-search"></i></a> </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+            <div class="navbar-collapse text-weight-400 collapse" id="nav-navbar-collapse-1" aria-expanded="false"
+                style="height: 1px;">
+                <ul class="nav navbar-nav navbar-right margin-right-0">
+                    <li><a class=""
+                        href="">Employee 
+                    </a>
+                </li>
+                    {%if user.is_authenticated%}
+                    
+
+                    
+                    <li class="dropdown">
+                    <a href="{% url 'App_Home:index' %}" class="dropdown-toggle" data-toggle="" data-hover="dropdown"role="button" aria-haspopup="true" aria-expanded="false">Welcome  {{ user.first_name }} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Change password</a></li>
+                        <li><a href="{% url 'register_app:logout' %}">Log out</a></li>
+                    </ul>
+                    {%else%}
+                    <li><a href="{%url 'register_app:login'%}" role="button" aria-haspopup="true" aria-expanded="false">login <span class="caret"></span></a></li>
+                    <li><a href="{%url 'register_app:register'%}" role="button" aria-haspopup="true" aria-expanded="false">Signup<span class="caret"></span></a></li>
+                    
+                    
+                    </li>
+                    {%endif%}
+                    {% if is_DR  %}
+                    <li><a href="" role="button" aria-haspopup="true" aria-expanded="false">9999 <span class="caret"></span></a></li>
+                    {%endif%}
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+</header>

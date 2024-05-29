@@ -1,0 +1,59 @@
+<section class="light-bg padding-top-small margin-bottom-0 ">
+    <div class="container margin-bottom-0">
+        <div class="col-md-12 text-center">
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                    <div class="row blog">
+                        <div class="col-md-12">
+                            <div class="blog-text">
+                                <h3 class="title text-capitalize margin-bottom-0">{{da.patiant_no.en_patiant_name}}</h3>
+                                <h4 class="title text-capitalize margin-bottom-0">{{da.patiant_no.ar_patiant_name}}</h4>
+                                <ul class="meta-tags">
+                                    <li><a>Visit Date: </a><i class="fa fa-calendar"></i> <a>{{da.create_time |date:'d-m-Y H:m'}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Gender: </a><i class="fa fa-user"></i> <a >{% if da.patiant_no.gender == 1 %} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</a></li>
+                                    <li>|</li>
+                                    <li><a>Nationalty: </a><i class="fa fa-tags"></i> <a >{{da.patiant_no.country}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Birth Date: {{da.patiant_no.birth_date |date:'d-m-Y'}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+</section>
+<div class="row custom-5-column">
+
+    <div class="col-md-3">
+        <!-- Begin: WIDGET -->
+        <div class="widget margin-bottom-large">
+            <h4 class="page-header text-weight-500 widget-title"> </h4>
+            <div class="tags">
+
+                <ul class="list-ul list-inline">
+                    <li id="Search_Susses_tube_name"> </li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- End: WIDGET -->
+    </div>
+    <div class="col-md-3">
+
+        <!-- Begin: WIDGET -->
+        <div class="widget margin-bottom-large">
+            <h4 class="page-header text-weight-500 widget-title">Test ist</h4>
+            <div class="tags">
+                {% for x in data %}
+                <br>
+                <li id="Search_Susses_tube_name"> {{x.Tube_Test_Name}} </li>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- End: WIDGET -->
+    </div>
+
+</div>

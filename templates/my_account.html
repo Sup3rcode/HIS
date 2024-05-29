@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+<section>
+  <div class="container padding-top-medium padding-bottom-medium">
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="margin-bottom-medium text-center">
+                  <h1 class="text-weight-700 text-uppercase">Edite Profile</h1>
+                  <div class="separator"><span class="short-line"></span><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+              </div>
+          </div>
+      </div>
+
+                <div class="row text-center">
+                    <div class="col-md-12">
+                      <div class="panel panel-light">
+                        <div class="panel-body">
+                          <form method="post" novalidate>
+                            {% csrf_token %}
+                            {% include 'includes/form.html'%}
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                          </form>
+                        </div>
+                    </div>
+                        
+                    </div>
+
+    </div>
+      
+  </div>
+</section>
+<section class="fullscreen" style="width: 1903px; height: 937px;">
+  <div class="vertical-content">
+      <div class="fullscreen-setting vertical-content-setting">
+          <div class="container padding-top-medium padding-bottom-medium">
+              <div class="row text-center">
+                  <div class="col-md-12">
+                    <div class="panel panel-light">
+                      <div class="panel-body">
+                        <form method="post" novalidate>
+                          {% csrf_token %}
+                          {% include 'includes/form.html'%}
+                          <button type="submit" class="btn btn-success">Save Changes</button>
+                        </form>
+                      </div>
+                  </div>
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+{%endblock%}

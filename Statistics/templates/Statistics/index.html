@@ -1,0 +1,94 @@
+{% extends '_base.html' %}
+
+{% block content %}
+<section class="parallax page-main-heading padding-top-large padding-bottom-0 text-white">
+
+</section>
+<section class="parallax page-main-heading padding-top-large padding-bottom-large text-white">
+    <div class="parallax_child img-e7-index" ></div>
+    <div class="container position-relative z-index-2">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <h1 class="text-weight-300">Statistics</h1>
+                
+            </div>
+            
+        </div>
+    </div>
+    <div class="overlay dark-8"></div>
+</section>
+
+<section class="padding-top-small padding-bottom-small light-bg border-light">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4 col-sm-12">
+                    <div class="parallax margin-bottom-small">
+                        <div class="parallax_child img-DR-Clinic-1 "
+                            style="outline: 100px solid rgba(246, 255, 118, 0.5) !important;"></div>
+                        <div
+                            class="text-white position-relative z-index-2 padding-top-medium padding-bottom-medium padding-left-medium padding-right-medium">
+                            <h2 class="text-capitalize text-weight-600 margin-bottom-xsmall">Patient Visit</h2>
+                            
+                            {%for x in Visit_total%}
+    
+    
+                            <li><a class="text-white ">{{x.Clinic_Name}}: </a> <a>{{x.Pateint_Visit_Clinic_Name.count}}</a>
+                            </li>
+                            {% endfor %}
+                            <br>
+                            <a href="#Patient_List" class="btn btn-default transparent border-radius-20">View More</a>
+                        </div>
+                        <div class="overlay dark-7"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="parallax margin-bottom-small">
+                        <div class="parallax_child img-admission-1 "
+                            style="outline: 100px solid rgba(246, 255, 118, 0.5) !important;"></div>
+                        <div
+                            class="text-white position-relative z-index-2 padding-top-medium padding-bottom-medium padding-left-medium padding-right-medium">
+                            <h2 class="text-capitalize text-weight-600 margin-bottom-xsmall">Admission Ward</h2>
+                            
+                            {%for w in ward%}
+    
+    
+                            <li><a class="text-white ">{{w.Section_Name}}: </a> <a>{{w.Section_Case2.count}}</a>
+                            </li>
+                            {% endfor %}
+                            <br>
+                            <a href="#Patient_List" class="btn btn-default transparent border-radius-20">View More</a>
+                        </div>
+                        <div class="overlay dark-6"></div>
+                    </div>
+                </div>
+               
+                <div class="col-md-4 col-sm-12">
+                    <div class="parallax margin-bottom-small">
+                        <div class="parallax_child img-admission-1 "
+                            style="outline: 100px solid rgba(246, 255, 118, 0.5) !important;"></div>
+                        <div
+                            class="text-white position-relative z-index-2 padding-top-medium padding-bottom-medium padding-left-medium padding-right-medium">
+                            <h2 class="text-capitalize text-weight-600 margin-bottom-xsmall">Admission Ward</h2>
+                            
+                            {%for w in ward%}
+    
+    
+                            <li><a class="text-white ">{{w.Section_Name}}: </a> <a>{{w.Section_Case2.count}}</a>
+                            </li>
+                            {% endfor %}
+                            <br>
+                            <a href="#Patient_List" class="btn btn-default transparent border-radius-20">View More</a>
+                        </div>
+                        <div class="overlay dark-6"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div></div>
+</section>
+{% endblock %}

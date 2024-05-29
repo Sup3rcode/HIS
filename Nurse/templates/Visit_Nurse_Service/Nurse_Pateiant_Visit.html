@@ -1,0 +1,84 @@
+{% extends '_base.html' %}
+
+
+{% block breadcrumb %}
+
+
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+    <div class="container">
+        <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Nurse Station Service </h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li class="breadcrumb-item "><a> Nurse station </a></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block content %}
+<section></section>
+
+<section class="page-main-heading light-bg padding-top-large padding-bottom-large">
+    <div class="container margin-bottom-0">
+        <div class="posts">
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                    <div class="row blog">
+                        <div class="col-md-12">
+                            <div class="blog-text">
+                                <h3 class="title text-capitalize margin-bottom-0">{{data.Patiant_No.en_patiant_name}}
+                                </h3>
+                                <h4 class="title text-capitalize margin-bottom-0">{{data.Patiant_No.ar_patiant_name}}
+                                </h4>
+                                <ul class="meta-tags">
+                                    <li><a>Visit Date: </a><i class="fa fa-calendar"></i> <a>{{data.Visit_Date
+                                            |date:'d-m-Y G:i'}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Gender: </a><i class="fa fa-user"></i> <a>{% if data.Patiant_No.gender == 1%} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</a></li>
+                                    <li>|</li>
+                                    <li><a>Nationalty: </a><i class="fa fa-tags"></i>
+                                        <a>{{data.Patiant_No.country}}</a>
+                                    </li>
+                                    <li>|</li>
+                                    <li> <a>Birth Date: {{data.Patiant_No.birth_date |date:'d-m-Y'}}</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="box-shadow-active">
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="margin-bottom-medium text-center">
+                    <h4 class="text-weight-600 text-uppercase upper-heading text-base">Our pricing</h4>
+                    <h1 class="text-weight-700 text-uppercase">Choose the package</h1>
+                    <div class="separator dark"><span class="short-line"></span><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            
+            <form method="POST" action="{% url 'Nurse:Save_Vital_Singes_Visit_View' %}">
+                {% include 'Visit_Nurse_Service/Vital-Signs-form.html' %}
+            </form>
+            
+            
+        </div>
+    </div>
+</section>
+{% endblock %}

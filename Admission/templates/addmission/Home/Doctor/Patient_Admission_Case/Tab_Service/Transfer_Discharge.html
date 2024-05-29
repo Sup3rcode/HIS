@@ -1,0 +1,117 @@
+<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+aria-haspopup="true" aria-expanded="false"> More <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li role="presentation"><a data-toggle="modal" data-target=".Transfer-modal">Transfer</a></li>
+<li role="presentation"><a data-toggle="modal" data-target=".Discharge-modal">Discharge</a></li>
+</ul>
+<div class="modal Transfer-modal animate fadeIn" data-animation="fadeIn" tabindex="-1"
+style="display: none;">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" id="Patiant_Case_History" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            
+            
+            <div class="panel panel-light">
+                <div class="panel-body">
+                    <form class="form-horizontal" action= "{% url 'Admission:Patient_Admission_Transfer_View'%}"  method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">&nbsp;</label>
+                            <div class="col-sm-10">
+                                <div class="form-control-static"><h4 class="media-heading">Transfer To Another Section</h4></div>
+                                <input type="hidden" name="Visit_id" maxlength="21" class="form-control" value="{{data.id}}" id="Visit_id">
+                                {% csrf_token %} 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Section_id" class="col-sm-2 control-label">Transfer To Section</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" required="" id="Section_id" name="Section_id">
+                                    <option value="" selected disabled>Select Section</option>
+                                    {% for x in Transfer_section_list %}
+                                    <option id="{{ x.id }}" value="{{ x.id }}">{{ x.Section_Name }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="Transfer_Tybe" class="col-sm-2 control-label">Transfer Tybe</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" required="" id="Transfer_Tybe" name="Transfer_Tybe">
+                                    <option value="" selected disabled>Select Transfer Tybe</option>
+                                    {% for t in Transfer_Tybe_list %}
+                                    <option id="{{ t.id }}" value="{{ t.id }}">{{ t.Tybe_Name }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label for="Transfer_Description" class="col-sm-2 control-label">Transfer Description</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="Transfer_Description" name="Transfer_Description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-base btn-sm text-weight-700 text-uppercase">submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="modal Discharge-modal animate fadeIn " data-animation="fadeIn" tabindex="-1"
+style="display: none;">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" id="Patiant_Case_History" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            
+            
+            <div class="panel panel-light">
+                <div class="panel-body">
+                    <form class="form-horizontal" action= "{% url 'Admission:Patient_Admission_Doctor_Discharge_View'%}"  method="POST" enctype="multipart/form-data">
+                        {% csrf_token %} 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">&nbsp;</label>
+                            <div class="col-sm-10">
+                                <div class="form-control-static"><h4 class="media-heading">Discharge </h4></div>
+                                <input type="hidden" name="Visit_id" maxlength="21" class="form-control" value="{{data.id}}" id="Visit_id">
+                                
+                            </div>
+                        </div>
+                        
+                        
+                       
+                        <div class="form-group">
+                            <label for="Discharge_Description" class="col-sm-2 control-label">Discharge Description</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="Discharge_Description" name="Discharge_Description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-base btn-sm text-weight-700 text-uppercase">submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>

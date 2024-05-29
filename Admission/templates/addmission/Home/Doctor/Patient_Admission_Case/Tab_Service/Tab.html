@@ -1,0 +1,464 @@
+<section class="padding-bottom-large padding-top-0 light-bg  border-light ">
+    <div class="container-fluid padding-top-small padding-right-large padding-left-large padding-bottom-large ">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-9">
+                    <div class="tabs-theme base nav-left">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs text-weight-600" role="tablist">
+                            <li role="presentation" class="active"><a href="#Visit_Screen" aria-controls="Visit_Screen" role="tab" data-toggle="tab">Visit Screen</a></li>
+                            
+                            <li role="presentation"><a href="#Doctor_Order" aria-controls="Doctor_Order" role="tab" data-toggle="tab">Doctor Order</a></li>
+                            <li role="presentation"><a href="#Radiology" aria-controls="Radiology" role="tab" data-toggle="tab" >Radiology</a></li>
+                            <li role="presentation"><a href="#labotory" aria-controls="labotory" role="tab" data-toggle="tab">labotory</a></li>
+                            <li role="presentation"><a href="#All_Visits" aria-controls="All_Visits" role="tab" data-toggle="tab">All_Visits</a></li>
+                            <li role="presentation"><a   role="tab" data-toggle="tab" onClick="Get_Files_ID({{data.Patient_No.id}})">Archive File</a></li>
+                            
+                            <li role="presentation" class="dropdown">
+                                {% include 'addmission/Home/Doctor/Patient_Admission_Case/Tab_Service/Transfer_Discharge.html' %}
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="Visit_Screen">
+                                {% include 'addmission/Home/Doctor/Patient_Admission_Case/Tab_Service/Visit_Screen.html' %}
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="Doctor_Order">
+                                <!-- start: Doctor_Order -->
+                            {% include 'addmission/Home/Doctor/Patient_Admission_Case/Tab_Service/Doctor_Order.html' %}
+                            <!-- End: Doctor_Order -->
+                                
+                            </div>
+                            
+                            <div role="tabpanel" class="tab-pane" id="Radiology">
+                                <div class="clearfix">
+                                    <div class="col-md-12 service light">
+                                        <div class="col-md-2 col-sm-4">
+                                            <button type="button"
+                                                class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                                data-toggle="modal" data-target=".Radiology_Visit" id="Add_Radiology">Add
+                                                Radiology Order</button>
+                                            <div class="modal Radiology_Visit animate fadeIn" id="Radiology_Visit"
+                                                data-animation="fadeIn" tabindex="-1" style="display: none;">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <button type="button" class="close" id="Patiant_Case_Order"
+                                                                data-dismiss="modal" aria-label="Close"><span
+                                                                    aria-hidden="true">×</span></button>
+                                                            <h4>New Radiology Order</h4>
+                                                            <hr>
+                                                            <form id="Patiant_Case_Xray_Save">
+                                                                <div class="row">
+                                                                    {% csrf_token %}
+                                                                    {% for field in Xray_Form %}
+                                                                    <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                                                                        <label class="control-label">{{ field.label }}</label>
+                                                                        <div class="form-group has-success">
+                                                                            {{ field }}
+                                                                        </div>
+                                                                    </div>
+                                                                    {% endfor %}
+                                                                    <div class="col-md-4 col-md-2">
+                                                                        <div class="form-group has-success">
+                                                                            <input type="hidden" name="visit_xray_id" maxlength="120" class="form-control"
+                                                                                id="visit_xray_id" value="{{data.id}}">
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                    <div class="col-md-4     col-md-2">
+                                                                        <div class="form-group has-success">
+                                                                            <input type="hidden" name="patiant_no" maxlength="120" class="form-control"
+                                                                                id="patiant_no" value="{{data.patiant_no}}">
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                    <br>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="col text-center">
+                                                                                <br>
+                                                                                <br>
+                                                                                <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                                                    value="Save" />
+                                                                
+                                                                        </div>
+                                                                
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4>Xray List</h4>
+                                    <div id="Xray_Vis_List">
+                                        {% include 'addmission/Home/Doctor/Patient_Admission_Case/list/xray_case_list.html' %}
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="labotory">
+                                <div class="clearfix">
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('CHEM' , {{data.id}})">CHEM</button>
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('BACT', {{data.id}})">BACT</button>
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('VIRO', {{data.id}})">VIRO</button>
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('SERO', {{data.id}})">SERO</button>
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('HEMA' , {{data.id}})">HEMA</button>
+                                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                        onClick="lab_list('hormon', {{data.id}})">hormon</button>
+        
+                                </div>
+                                <form id="patiant_no_lab_form">
+                                    <input type="text" name="visit_Order_id" maxlength="120" class="form-control"
+                                        id="visit_Case_id" value="{{data.id}}">
+                                    <input type="text" name="patiant_no" maxlength="120" class="form-control"
+                                        id="patiant_no_lab" value="{{data.Patient_No.id}}">
+                                </form>
+                                <div class="well box-shadow-active">
+                                    <dev>
+                                        <input type="hidden" name="visit_Case_id" maxlength="120" class="form-control"
+                                            id="lab_tybe_id">
+                                    </dev>
+                                    <div class="row checklist" id="labotory_list">
+        
+                                    </div>
+                                    <button type="button"
+                                        class="btn btn-base text-weight-700 text-uppercase btn-demo-margin-bottom"
+                                        id="btn-tst">Send</button>
+                                </div>
+                            </div>
+    
+                        <!-- start: All_Visits -->
+                        <div role="tabpanel" class="tab-pane" id="All_Visits">
+                            <div class="clearfix">
+                                
+                                {% include 'addmission/Home/Doctor/Patient_Admission_Case/Tab_Service/All_Visit_Id.html' %}
+                                
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            <div class="col-md-3 box-shadow-active border-light">
+
+                <div class="margin-top-small text-left">
+                    <h4 class="text-weight-700 text-uppercase">Pateiant Vital Signs</h4>
+                    <div class="separator dark"><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                            class="fa fa-circle-o"></i><span class="short-line"></span></div>
+                </div>
+                <div class="row">
+    
+                   
+                    <div class="col-sm-12 service base">
+                        <div class="service-icon">
+                            <i class="fa fa-copyright"></i>
+                        </div>
+                        <div class="service-text">
+                            <h4 class="text-capitalize text-weight-600"><a href="#">Temp : </a></h4>
+                            <p class="text-capitalize text-weight-400">{{vital_sings.Temp}}</p>
+                        </div>
+                        <div class="timeline-list"></div>
+                    </div>
+                    <div class="col-sm-12 service base">
+                        <div class="service-icon">
+                            <i class="fa fa-heartbeat"></i>
+                        </div>
+                        <div class="service-text">
+                            <h4 class="text-capitalize text-weight-600">Blood Pressure :</h4>
+                            <p class="text-capitalize text-weight-400">{{vital_sings.Blood_pressure}}</p>
+                        </div>
+                        <div class="timeline-list"></div>
+                    </div>
+                    <div class="col-sm-12 service base">
+                        <div class="service-icon">
+                            <i class="fa fa-gratipay"></i>
+                        </div>
+                        <div class="service-text">
+                            <h4 class="text-capitalize text-weight-600">Spo2 :</h4>
+                            <p class="text-capitalize text-weight-400">{{vital_sings.spo2}} %</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 service base">
+                        <div class="service-icon">
+                            <i class="fa fa-percent"></i>
+                        </div>
+                        <div class="service-text">
+                            <h4 class="text-capitalize text-weight-600">Resp Rate :</h4>
+                            <p class="text-capitalize text-weight-400">{{vital_sings.Resp_rate}}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 service base">
+                        <div class="service-icon">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div class="service-text">
+                            <h4 class="text-capitalize text-weight-600">Height :</h4>
+                            <p class="text-capitalize text-weight-400">{{vital_sings.Height}}</p>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</section>
+
+{% block javascript %}
+
+
+<script>
+
+
+
+
+
+    $(document).ready(function () {
+        var xray_data = []
+        $("#Patiant_Case_Xray_Save").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#Patiant_Case_Xray_Save").serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'Admission:admission_Case_Xray_Save' %}",
+                data: formData,
+                success: function (data) {
+                    $("#Patiant_Case_Xray_Save").trigger('reset');
+                    $('#Xray_Vis_List').html(data);
+                    
+                    
+
+                },
+                error: function (data) {
+                    cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos : 'middle', hPos : 'center' });
+
+                }
+
+            })
+
+        })
+    });
+
+
+    
+
+
+    function rep(data) {
+        var rep = document.getElementById('show_report')
+        var rep = document.getElementById('show_report')
+        for (var i = 0; i < data.length; i++) {
+            var row_rep = `<dev>${data[i].id}</dev>`
+            rep.innerHTML += row_rep
+
+        }
+    }
+    function shoe_rep(report_id) {
+        var rep = document.getElementById('show_report')
+        var rep_data = []
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'Visit_Clinic:show_report_xray' %}",
+            data: {
+                'report_id': report_id
+            },
+            success: function (response) {
+
+                document.getElementById("show_report").innerHTML = `<dev><p>${response.Report_time}</p>${response.Report_details}<p></p></dev>`
+                document.getElementById("show_report2").innerHTML = (response.Report_time)
+
+            },
+            error: function (response) {
+                // alert the error if any error occured
+
+            }
+
+        })
+    }
+
+    function Patiant_xray_List() {
+
+        visit_xray = $('#visit_xray_id').val();
+        var Add_Radiology = document.getElementById('Add_Radiology')
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'Visit_Clinic:xray_visit_list' %}",
+            data: {
+                'visit_xray': visit_xray
+            },
+            success: function (data) {
+                if (data.is_exists == false) {
+                    Add_Radiology.disabled = true;
+                cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos : 'middle', hPos : 'center' });
+              } else {
+                Add_Radiology.disabled = false;
+                $('#Xray_Vis_List').html(data);
+              }
+               
+            },
+            error: function (response) {
+                // alert the error if any error occured
+
+            }
+
+        })
+    }
+
+
+    function lab_list(lab_type , id) {
+        var term = lab_type
+        var lab_lis = []
+        var visit_id = id
+        var tybe_id = document.getElementById('lab_tybe_id')
+       
+        $.ajax({
+            dataType: 'json',
+            data: {
+                'term': term ,
+                'visit_id' :visit_id
+            },
+            url: "{% url 'labotory:get_Labotory_Tybe_Admission_Case' %}",
+            // on success
+            success: function (response) {
+                lab_lis = response.data
+                //tybe_id.innerHTML = tybe_id_html
+                document.getElementById('lab_tybe_id').value = response.tybe_id
+                Lab_List_Table(lab_lis)
+                document.getElementById("btn-tst").style.visibility = "visible";
+            },
+            // on error
+
+        });
+
+        return false;
+    }
+
+    
+    function Lab_List_Table(data) {
+        var list_lab_id = document.getElementById('labotory_list')
+        $("#labotory_list").empty();
+        for (var i = 0; i < data.length; i++) {
+
+            var list_ruslet = `
+            
+                            
+                                <div class="checkbox col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                    <label style="white-space: nowrap;"><input type="checkbox" id="${data[i].id}" value="${data[i].id}" >${data[i].test_name}</label>
+                                </div>
+            `
+            list_lab_id.innerHTML += list_ruslet
+            
+
+        }
+    }
+</script>
+<script>
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+    $(document).ready(function () {
+        $('#btn-tst').click(function () {
+
+            var id = [];
+            $(':checkbox:checked').each(function (i) {
+                id[i] = $(this).val();
+            })
+            if (id.length === 0) {
+                alert("Please select items ")
+            } else {
+                var patiant_no_lab = new $("#patiant_no_lab").val();
+                var tybe_id = new $("#lab_tybe_id").val();
+                var visit_Case_id = new $("#visit_Case_id").val();
+                var formlabData = new $("#patiant_no_lab_form").serialize();
+                console.log(id);
+                $.ajax({
+                    url: "{% url 'labotory:Admission_Send_Order_to_lab' %}",
+                    method: "POST",
+                    data: {
+                        tybe_id :tybe_id ,
+                        id: id,
+                        visit_Case_id: visit_Case_id,
+                        patiant_no_lab: patiant_no_lab,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function (response) {
+                        $("#labotory_list").empty();
+                        $('#labotory_list').append(response);
+                        document.getElementById("btn-tst").style.visibility = "hidden";
+                    },
+                    error: function (error) {
+                        alert(error.error)
+                    }
+                })
+            }
+
+
+        })
+
+    })
+
+
+    function Visit_Lab_List_Order(data) {
+        var list_lab_id = document.getElementById('labotory_list')
+        $("#labotory_list").empty();
+        for (var i = 0; i < data.length; i++) {
+            var m = new Date(data[i].ins_user_date);
+            var DateTimeFormate = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+            var row = `<tr>
+							<td>${data[i].id}</td>
+							<td>${DateTimeFormate}</td>
+                            <td>${data[i].Lab_Test}</td>
+                            <td>${data[i].Specimens_Arrival_Status}</td>
+					  </tr>`
+            list_lab_id.innerHTML += row
+
+        }
+    }
+
+    function Get_Files_ID(get_id) {
+
+
+$.ajax({
+    url: "{% url 'Patient_Files:validate_patient_pdf_file_id'  %}",
+    data: {
+        'get_id' :get_id
+    },
+    dataType: 'json',
+    success: function (data) {
+        if (data.is_taken == false) {
+            
+            cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos: 'middle', hPos: 'center' });
+            
+        } else {
+            
+            var get_id_url = '/files/pateint/pdf/'+get_id;
+        window.open(get_id_url, '_blank');
+        }
+        
+    },
+
+});
+
+}
+window.onload(console.log(location.href))
+</script>
+
+{% endblock javascript %}

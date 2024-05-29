@@ -1,0 +1,78 @@
+<div class="clearfix">
+    <div class="col-md-12 service light">
+        <div class="col-md-2 col-sm-4">
+            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                data-toggle="modal" data-target=".Visit-Screen-modal">Add Visit Screen
+            </button>
+            <div class="modal Visit-Screen-modal animate fadeIn" id="Visit-Screen-modal"
+                data-animation="fadeIn" tabindex="-1" style="display: none;">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" id="Patiant_Case_History"
+                                data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4>New Visit Screen</h4>
+                            <hr>
+                            <form action="{% url 'Admission:Patient_Admission_Doctor_Visit_Case_View' %}"  method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="get_Visit_id" maxlength="21" class="form-control" value="{{data.id}}" id="get_Visit_id">
+                                {% csrf_token %} 
+                                {% for field_Note in Patient_Admission_Doctor_Visit_Case_Form %}
+                                    <div class="col-md-4 col-md-4">
+                                        <h4>{{ field_Note.label }}</h4>
+                                        <div class="form-group has-success">
+                                            {{ field_Note }}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="col text-center">
+                                                <br>
+                                                <br>
+                                                <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                    id="Vital-Signs-btn" value="Save" />
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Small modal -->
+        </div>
+
+    </div>
+</div>
+<div id="console"
+    class="padding-top-small padding-right-small padding-left-small padding-bottom-small margin-bottom-0 box-shadow-active">
+    <h4>Patient Visit Case History</h4>
+    <table class="table table-striped ">
+        <tr class="bg-info">
+            <th>History</th>
+            <th>Diagnosis</th>
+            <th>Examination</th>
+            <th>Examination</th>
+            <th>Doctor</th>
+            <th>Visit Case Date</th>
+            
+        </tr>
+
+        <tbody id="Case_History_Table">
+            {% for x in visit_screan_id %}
+            <tr>
+                <td>{{x.History}}</td>
+                <td>{{x.Diagnosis}}</td>
+                <td>{{x.Examination}}</td>
+                <td>{{x.Doctor_Note}}</td>
+                <td>{{x.ins_user_code.first_name}}</td>
+                <td>{{x.ins_user_date |date:'d-m-Y G:i'}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

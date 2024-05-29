@@ -1,0 +1,122 @@
+<h4> Clinic Visit Case List</h4>
+<table class="table table-striped padding-top-medium box-shadow-active">
+    <tr class="bg-info">
+        <th>id</th>
+        <th>Visit Date</th>
+        <th>Get Visit</th>
+        <th>Status</th>
+        <th>Visit Start</th>
+        <th>Visit End</th>
+        <th>Close_Details</th>
+    </tr>
+    <tbody>
+        {% with visit=data.get_patient_visit_list.get_visit %}
+                {% for All_Visits in visit %}
+        <tr>
+            <th>{{ All_Visits.id }}</th>
+            <td>{{ All_Visits.Visit_Date |date:'d-m-Y G:i' }}</td>
+            
+            <td>
+                
+                    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" data-toggle="modal" data-target=".fadeIn-modal" onClick="Get_Visit_History({{ All_Visits.id }})">Show</button>
+                
+            </td>
+            <td>{{ All_Visits.is_Close}}</td>
+            <td>{{ All_Visits.Opened_Date |date:'G:i' }}</td>
+            <td>{{ All_Visits.Closed_Date |date:' G:i' }}</td>
+            <td>{{ All_Visits.Close_Details}}</td>
+
+
+        </tr>
+        {% endfor %}
+        {%endwith%}
+    </tbody>
+</table>
+<hr>
+<div class="padding-top-large">
+    <h4> Admission Visit Case List</h4>
+    <table class="table table-striped padding-top-medium box-shadow-active">
+        <tr class="bg-info">
+            <th>id</th>
+            <th>Visit Date</th>
+            <th>Get Visit</th>
+            <th>Ward Name</th>
+            <th>Visit Start</th>
+            <th>Visit End</th>
+            <th>Details</th>
+            <th>Discharge Status</th>
+        </tr>
+        <tbody>
+            {% with visit=data.get_patient_visit_list.get_visit_Admission %}
+                    {% for All_Visits in visit %}
+            <tr>
+                <th>{{ All_Visits.id }}</th>
+                <td>{{ All_Visits.Accept_OF_Section_Date |date:'d-m-Y G:i' }}</td>
+                
+                <td>
+                    
+                        <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" data-toggle="modal" data-target=".fadeIn-modal" onClick="Get_Visit_History({{ All_Visits.id }})">Show</button>
+                    
+                </td>
+                <td>{{ All_Visits.Section.Section_Name}}</td>
+                <td>{{ All_Visits.Start_Admission_Of_Section_Date |date:'d-m-Y G:i' }}</td>
+                <td>{{ All_Visits.End_Admission_Of_Section_Date |date:'d-m-Y G:i' }}</td>
+                <td>{{ All_Visits.Reason_for_Visit_closed}}</td>
+                <td>{{ All_Visits.Visit_is_Closed}}</td>
+    
+    
+            </tr>
+            {% endfor %}
+            {%endwith%}
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-2 col-sm-4">
+    <!-- Begin: Small modal -->
+    
+
+    <div class="modal fadeIn-modal animate fadeIn" data-animation="fadeIn" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <div id="Visit_id_List_his">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End: Small modal -->
+</div>
+{% load static %}
+
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/jquery_3.3.1_jquery.min.js' %}"></script>
+<script>
+
+    
+    function Get_Visit_History(id) {
+        var visit_id = id
+        $.ajax({
+            url: "{% url 'Visit_Clinic:get_visit' %}",
+            data: {
+                'visit_id' :visit_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#Visit_id_List_his").empty();
+                $('#Visit_id_List_his').append(data);
+                
+            },
+
+        });
+
+        return false;
+    }
+</script>
+
+{% endblock javascript %}
+

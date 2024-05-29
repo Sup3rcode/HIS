@@ -1,0 +1,55 @@
+
+
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">&nbsp;</label>
+                                                                    <div class="col-sm-10">
+                                                                        <div class="form-control-static"><h4 class="media-heading">Transfer To Another Section</h4></div>
+                                                                        <input type="hidden" name="Visit_id" maxlength="21" class="form-control" value="{{data.id}}" id="Visit_id">
+                                                                        {% csrf_token %} 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Section_id" class="col-sm-3 control-label">Visit Section id</label>
+                                                                    <div class="col-sm-6">
+                                                                   {{Transfer_Forms.Visit_Section_id}}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Section_id" class="col-sm-3 control-label">Transfer From Section</label>
+                                                                    <div class="col-sm-6">
+                                                                   {{Transfer_Forms.Transfer_From_Section}}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Section_id" class="col-sm-3 control-label">Transfer To Section</label>
+                                                                    <div class="col-sm-6">
+                                                                   {{Transfer_Forms.Transfer_To_Section}}
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Transfer_Tybe" class="col-sm-3 control-label">Transfer Tybe</label>
+                                                                    <div class="col-sm-6">
+                                                                        {{Transfer_Forms.Transfer_Tybe}}
+                                                                    
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                                <div class="form-group">
+                                                                    <label for="Transfer_Description" class="col-sm-3 control-label">Transfer Description</label>
+                                                                    <div class="col-sm-6">
+                                                                        {{Transfer_Forms.Transfer_Description}}
+                                                                     
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-sm-12 padding-left-large ">
+                                                                        <div class="col-md-8"></div>
+                                                                        <div class="col-md-4">
+                                                                            <button type="submit" class="btn btn-base btn-sm text-weight-700 text-uppercase">submit</button>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                </div>

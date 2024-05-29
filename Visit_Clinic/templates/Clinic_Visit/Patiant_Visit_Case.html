@@ -1,0 +1,86 @@
+{% extends '_base.html' %}
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Vital Sins & Visual Tryage</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#" id="Nurse_station_Reception"> Nurse
+                            station</a></li>
+                    <li class="breadcrumb-item "><a>Vital Sins & Visual Tryage</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+<style>
+    .img-medico-2 {
+        background-image: url('/static/assets/images/bg-2.jpg');
+    }
+</style>
+<section></section>
+<section class="padding-top-small padding-bottom-small margin-bottom-0 box-shadow-active">
+    <div class="container margin-bottom-0">
+        <div class="container-fluid light-bg border-light padding-top-small
+            margin-bottom-0 box-shadow-active">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                    <div class="row blog">
+                        <div class="col-md-12">
+                            <div class="blog-text">
+                                <h3 class="title text-capitalize
+                                    margin-bottom-0">{{data.Patiant_No.en_patiant_name}}
+                                </h3>
+                              
+                                <h4 class="title text-capitalize
+                                    margin-bottom-0">{{data.Patiant_No.ar_patiant_name}}
+                                </h4>
+                                <ul class="meta-tags">
+                                    <li><a><strong>Visit Date: </strong></a><i class="fa fa-calendar"></i> <a>{{data.Visit_Date |date:'d-m-Y H:m'}}</a></li>
+                                    <li>|</li>
+                                    <li> <a><strong>Gender:</strong> </a><i class="fa fa-user"></i>
+                                        <a><strong>{% if data.Patiant_No.gender == '1' %} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</strong></a></li>
+                                    <li>|</li>
+                                    <li><a><strong>Nationalty: </strong></a><i class="fa
+                                            fa-tags"></i>
+                                        <a>{{data.Patiant_No.nationalty}}</a></li>
+                                    <li>|</li>
+                                    <li> <a><strong>Birth Date:</strong>
+                                            {{data.Patiant_No.birth_date|date:'d-m-Y'}}</a></li>
+                                            <li> 
+                                                <input type="hidden" name="visit_Case_files_id" maxlength="120" class="form-control"
+                                                id="visit_Case_files_id" value="{{data.Patiant_No.id}}"></li>
+
+                                                <h4 class="title text-capitalize
+                                                    margin-bottom-0">
+                                                </h4>
+                                             
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+
+    {% include 'Clinic_Visit/Case_visit_tab.html' %}
+
+    <section>
+    {% endblock %}

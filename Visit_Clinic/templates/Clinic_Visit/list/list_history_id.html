@@ -1,0 +1,26 @@
+<h4>Patient Visit Case History</h4>
+                                <table class="table table-striped ">
+                                    <tr class="bg-info">
+                                        <th>History</th>
+                                        <th>Diagnosis</th>
+                                        <th>Examination</th>
+                                        <th>Examination</th>
+                                        <th>Doctor</th>
+                                        <th>Visit Case Date</th>
+                                        
+                                    </tr>
+    
+                                    <tbody id="Case_History_Table">
+                                        {% for x in visit_screan_id %}
+                                        <tr>
+                                            <td>{{x.History}}</td>
+                                            <td>{{x.Diagnosis}}</td>
+                                            <td>{{x.Examination}}</td>
+                                            <td>{{x.Doctor_Note}}</td>
+                                            <td>{{x.ins_user_code.first_name}}</td>
+                                            <td>{{x.ins_user_date |date:'d-m-Y G:i'}}</td>
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>

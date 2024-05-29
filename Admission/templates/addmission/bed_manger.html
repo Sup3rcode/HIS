@@ -1,0 +1,187 @@
+{% extends '_base.html' %}
+{% block content %}
+<section class="padding-top-small padding-bottom-small margin-bottom-0">
+  <div class="container margin-bottom-0">
+      <div class="container-fluid light-bg border-light padding-top-small
+          margin-bottom-0 box-shadow-active">
+          <div class="row">
+              <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                  <div class="row blog">
+                      <div class="col-md-12">
+                          <div class="blog-text">
+                              <h3 class="title text-capitalize
+                                  margin-bottom-0">{{data.Patient_No.en_patiant_name}}
+                              </h3>
+                            
+                              <h4 class="title text-capitalize
+                                  margin-bottom-0">{{data.Patient_No.ar_patiant_name}}
+                              </h4>
+                              <ul class="meta-tags">
+                                  <li><a>Visit Date: </a><i class="fa
+                                          fa-calendar"></i> <a>{{data.created_dt |date:'d-m-Y H:m'}}</a></li>
+                                  <li>|</li>
+                                  <li> <a>Gender: </a><i class="fa fa-user"></i>
+                                      <a>{% if data.Patient_No.gender == 1 %} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</a></li>
+                                  <li>|</li>
+                                  <li><a>Nationalty: </a><i class="fa
+                                          fa-tags"></i>
+                                      <a>{{data.Patient_No.country}}</a></li>
+                                  <li>|</li>
+                                  <li> <a>Birth Date:
+                                          {{data.Patient_No.birth_date|date:'d-m-Y'}}</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+
+  </section>
+<section class="light-bg">
+  <div class="container">
+    <section class="light-bg">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            {{Patient_NO_Visit_List.id}}
+            <div class="panel-group accordion base" id="accordion2" role="tablist" aria-multiselectable="true">
+              {% for x in Patient_NO_Visit_List %}
+              <table class="table table-striped padding-top-medium box-shadow-active">
+                <tr class="bg-info">
+                    <th>Visit id</th>
+                    <th>Order</th>
+                    <th>Visit Screan</th>
+                    <th>Xray</th>
+                </tr>
+                <tbody id="Case_Order_Table">
+                    <tr>
+                        <th>{{ x.id }}</th>
+                        
+                        <th>
+
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse"data-parent="#accordion2" href="#visit-{{Visit_Order.id}}" aria-expanded="false">
+                                  <span class="icon-collapse"></span>Visit ID : {{x.id}}   |  Date : {{x.Visit_Date |date:'d-m-Y '}}
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="visit-{{Visit_Order.id}}" class="panel-collapse collapse"
+                              role="tabpanel" aria-expanded="false"
+                              style="height: 0px;">
+                              <div class="panel-body">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    
+                                    <table class="table table-striped padding-top-medium box-shadow-active">
+                                      <tr class="bg-info">
+                                          <th>Order No</th>
+                                          <th>Order_Time</th>
+                                          <th>Dr_Order</th>
+                                          <th>Dr_Note</th>
+                                          <th>Nurse_Note</th>
+                                          <th>Nurse_Result_Time</th>
+                                          <th>Order_Status</th>
+                                      </tr>
+                                      <tbody id="Case_Order_Table">
+                                          {% for x in Visit_Order %}
+                                          <tr>
+                                              <th>{{ x.id }}</th>
+                                              <td>{{ x.ins_user_date |date:'d-m-Y G:i' }}</td>
+                                              <td>{{ x.Dr_Order }}</td>
+                                              <td>{{ x.Dr_Note }}</td>
+                                              <td>{{ x.Nurse_Note }}</td>
+                                              <td>{{ x.Nurse_Result_Time |date:'d-m-Y G:i' }}</td>
+                                              <td>{{ x.order_status }}</td>
+                                              <td>
+                                                  {% if x.order_status == True %}
+                                                  {% if x.Visit_Files %}
+                                                  <a href="{% url 'Patient_Visits:order_pdf' x.id %}" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" target="_blank">
+                                                Show Files</a>
+                                                {% else %}
+                                                <span class="text-muted"></span>
+                                               {% endif %}
+                                               {% endif %}
+                                                </td> 
+            
+            
+                                          </tr>
+                                          {% endfor %}
+                                      </tbody>
+                                  </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </th>
+                        <th>
+
+                          <div class="panel panel-default">
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse"data-parent="#accordion2" href="#Visit_History" aria-expanded="false">
+                                  <span class="icon-collapse"></span> History Visit List
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="Visit_History" class="panel-collapse collapse"
+                              role="tabpanel" aria-expanded="false"
+                              style="height: 0px;">
+                              <div class="panel-body">
+                                <div class="row">
+                                  <div class="col-md-4">
+                                    
+                                    <table class="table table-striped padding-top-medium box-shadow-active">
+                                      <tr class="bg-info">
+                                          <th>Order No</th>
+                                          <th>insert Date</th>
+                                          <th>History</th>
+                                          <th>Diagnosis</th>
+                                          <th>Examination</th>
+                                          <th>Doctor_Note</th>
+                                         
+                                      </tr>
+                                      <tbody id="Case_Order_Table">
+                                          {% for h in Visit_History %}
+                                          <tr>
+                                              <th>{{ h.id }}</th>
+                                              <td>{{ h.ins_user_date |date:'d-m-Y G:i' }}</td>
+                                              <td>{{ h.History }}</td>
+                                              <td>{{ h.Diagnosis }}</td>
+                                              <td>{{ h.Examination }}</td>
+                                          </tr>
+                                          {% endfor %}
+                                      </tbody>
+                                  </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </th>
+                        
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+
+              {% endfor %}
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
+{% include 'clinic/case/Case_visit_tab.html' %}
+{% endblock %}

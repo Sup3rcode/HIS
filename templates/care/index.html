@@ -1,0 +1,153 @@
+{% extends '_base.html' %}
+
+{% block content %}
+{% include 'care/10.html' %}
+<section class="light-bg box-shadow-active border-light">
+
+
+    {% if is_support %}
+                    <li><a href="" role="button" aria-haspopup="true" aria-expanded="false">gg : clients <span class="caret"></span></a></li>
+                    {%endif%}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="margin-bottom-medium text-center ">
+                <h1 class="text-weight-700 text-uppercase"> Quick  Access</h1>
+                <div class="separator"><span class="short-line"></span><i class="fa fa-circle-o"></i><i
+                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class="{% if  New_User %} isDisabled {% else %} fa {% endif %} " href="{% url 'Patient_Visit:home' %}">
+            <div class="service-icon big">
+                <i class="fa fa-wpforms"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-file-text-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a class=" " href="{% url 'Patient_Visit:home' %}">Patient Visit Reception </a></h4>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="{% url 'Nurse:Home' %}">
+            <div class="service-icon big">
+                <i class="fa fa-heartbeat"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a class=" " href="{% url 'Nurse:Home' %}"> Nurse station</a></h4>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="{% url 'Visit_Clinic:index' %}">
+            <div class="service-icon big">
+                <i class="fa fa-user-md"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a class=" " href="{% url 'Visit_Clinic:index' %}">Doctor Clinic</a></h4>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="">
+            <div class="service-icon big">
+                <i class="fa fa-file-excel-o"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a class=" " href="">Rdiology</a></h4>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="{% url 'App_Home:index' %}">
+            <div class="service-icon big">
+                <i class="fa fa-bed"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class=" " class="text-uppercase text-weight-600"><a class=" " href="{% url 'App_Home:index' %}">Admission</a></h4>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="{% url 'Visit_Clinic:xray_order_list_view' %}">
+            <div class="service-icon big">
+                <i class="fa fa-file-excel-o"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a class=" " href="{% url 'Visit_Clinic:xray_order_list_view' %}">Rdiology</a></h4>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a class=" " href="{% url 'labotory:Specimens_Arrival_View' %}">
+            <div class="service-icon big">
+                <i class="fa fa-tint"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class=" " class="text-uppercase text-weight-600"><a class=" " href="{% url 'labotory:Specimens_Arrival_View' %}">Specimens Arrival</a></h4>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a href="{% url 'Patient_Files:medecal_report' %}">
+            <div class="service-icon big">
+                <i class="fa fa-history"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-history"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a href="{% url 'Patient_Files:medecal_report' %}">Patient Information Record</a></h4>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a href="{% url 'Statistics:index' %}">
+            <div class="service-icon big">
+                <i class="fa fa-bar-chart"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a href="{% url 'Statistics:index' %}">Statistics</a></h4>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 service text-center base">
+        <a href="#">
+            <div class="service-icon big">
+                <i class="fa fa-clipboard"></i>
+            </div>
+        </a>
+        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i
+                class="fa fa-circle-o"></i><span class="short-line"></span></div>
+        <div class="service-text">
+            <h4 class="text-uppercase text-weight-600"><a href="#">Reports</a></h4>
+            </p>
+        </div>
+    </div>
+</div>
+
+</section>
+{% endblock %}

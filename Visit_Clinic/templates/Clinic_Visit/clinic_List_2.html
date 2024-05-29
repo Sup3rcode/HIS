@@ -1,0 +1,46 @@
+<table class="table table-bordered text-left" id="Patiant_clinic_er">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Patiant File NO</th>
+            <th>AR Name</th>
+            <th>EN Name</th>
+            <th>ER Clinic</th>
+            <th>Date Join</th>
+            <th>Patiant Mode</th>
+            <th>Vital Status</th>
+            <th>Clinic Visit Status</th>
+
+
+        </tr>
+    </thead>
+    <tbody class="text-weight-600 text-uppercase">
+        {% for line in data %}
+        
+        <tr>
+            <th>{{ line.id }}</th>
+            <td><a href="{% url 'Visit_Clinic:Patiant_Visit_Case_View' line.id %}">{{ line.Patiant_No}}</a></td>
+            <td>{{ line.Patiant_No.ar_patiant_name }}</td>
+            <td>{{ line.Patiant_No.en_patiant_name }}</td>
+            <td>{{ line.Clinic_Name }}</td>
+            <td>{{ line.Visit_Date |date:'d-m-Y G:i' }}</td>
+            {% if line.is_Transfer == True %}
+            <td class="warning">{{ line.Visit_Type }}</td>
+            {% else %}
+            <td>{{ line.Patiant_Mode }}</td>
+            {% endif %}
+            
+            {% if line.Vital_Signs_Status == True %}
+                    <td class="success">Visited</td>
+                    {% else %}
+                    <td class="danger">Wating</td>
+                    {% endif %}
+                    {% if line.Visit_Opened_status == True %}
+                    <td class="success">Visited</td>
+                    {% else %}
+                    <td class="danger">Wating</td>
+                    {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,774 @@
+{% load static %}
+
+
+<style>
+    .checklist .checkbox {
+        position: relative;
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .checklist .checkbox+.checkbox {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+
+    .well {
+        min-width: 250px;
+    }
+
+    .checklist .checkbox {
+        position: relative;
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .checklist .checkbox+.checkbox {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<section class="padding-bottom-large padding-top-0 light-bg  border-light ">
+    <div class="container-fluid padding-top-small padding-right-large padding-left-large padding-bottom-large margin-top-0 " >
+        <div class="row">
+    
+            <div class="col-md-9">
+                <div class="tabs-theme base nav-left">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs text-weight-600" role="tablist">
+                        <li role="presentation" class="active"><a href="#Visit_Screen" aria-controls="Visit_Screen"
+                                role="tab" data-toggle="tab">Visit_Screen</a></li>
+                        <li role="presentation"><a href="#Doctor_Order" aria-controls="Doctor_Order" role="tab"
+                                data-toggle="tab">Doctor_Order</a></li>
+                        <li role="presentation"><a href="#Radiology" aria-controls="Radiology" role="tab" data-toggle="tab"
+                                onClick="Patiant_xray_List()">Radiology</a></li>
+                        <li role="presentation"><a href="#labotory" aria-controls="labotory" role="tab"
+                                data-toggle="tab">labotory</a></li>
+                        <li role="presentation"><a href="#All_Visits" aria-controls="All_Visits" role="tab"
+                                data-toggle="tab">All_Visits</a></li>
+                                <li role="presentation" class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                        aria-haspopup="true" aria-expanded="false"> More <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li role="presentation"><a data-toggle="modal"
+                                                data-target=".Transfer-modal">Transfer</a></li>
+                                        <li role="presentation"><a data-toggle="modal"
+                                                data-target=".Discharge-modal">Discharge</a></li>
+                                    </ul>
+                                    <div class="modal Transfer-modal animate fadeIn" data-animation="fadeIn" tabindex="-1"
+                                        style="display: none;">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <button type="button" class="close" id="Patiant_Case_History" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    
+                                                    
+                                                    <div class="panel panel-light">
+                                                        <div class="panel-body">
+                                                            <form class="form-horizontal" action= "{% url 'Admission:Patient_Admission_Transfer_View'%}"  method="POST" enctype="multipart/form-data">
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">&nbsp;</label>
+                                                                    <div class="col-sm-10">
+                                                                        <div class="form-control-static"><h4 class="media-heading">Transfer To Another Section</h4></div>
+                                                                        <input type="hidden" name="Visit_id" maxlength="21" class="form-control" value="{{data.id}}" id="Visit_id">
+                                                                        {% csrf_token %} 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Section_id" class="col-sm-2 control-label">Transfer To Section</label>
+                                                                    <div class="col-sm-6">
+                                                                        <select class="form-control" required="" id="Section_id" name="Section_id">
+                                                                            <option value="" selected disabled>Select Section</option>
+                                                                            {% for x in Transfer_section_list %}
+                                                                            <option id="{{ x.id }}" value="{{ x.id }}">{{ x.Section_Name }} </option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="Transfer_Tybe" class="col-sm-2 control-label">Transfer Tybe</label>
+                                                                    <div class="col-sm-6">
+                                                                        <select class="form-control" required="" id="Transfer_Tybe" name="Transfer_Tybe">
+                                                                            <option value="" selected disabled>Select Transfer Tybe</option>
+                                                                            {% for t in Transfer_Tybe_list %}
+                                                                            <option id="{{ t.id }}" value="{{ t.id }}">{{ t.Tybe_Name }} </option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                                <div class="form-group">
+                                                                    <label for="Transfer_Description" class="col-sm-2 control-label">Transfer Description</label>
+                                                                    <div class="col-sm-10">
+                                                                        <textarea class="form-control" id="Transfer_Description" name="Transfer_Description" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                                        <button type="submit" class="btn btn-base btn-sm text-weight-700 text-uppercase">submit</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal Discharge-modal animate fadeIn " data-animation="fadeIn" tabindex="-1"
+                                        style="display: none;">
+                                        <div class="modal-dialog modal-lg white-bg" role="document">
+        
+        
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <button type="button" class="close" id="Patiant_Case_History" data-dismiss="modal" aria-label="Close"><span
+                                                            aria-hidden="true">×</span></button>
+                                            
+                                            
+                                                    <div class="panel panel-light">
+                                                        <div class="panel-body">
+                                                            <form class="form-horizontal" >
+                                                                <div class="form-group">
+                                                                    <label class="col-sm-2 control-label">&nbsp;</label>
+                                                                    <div class="col-sm-10">
+                                                                        <div class="form-control-static">
+                                                                            <h4 class="media-heading">Transfer To Another Section</h4>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                </div>
+                                                                {% include 'addmission/Doctor/Forms/Transfer_Form.html' %}
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+    
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="Visit_Screen">
+                            <div class="clearfix">
+                                <div class="col-md-12 service light">
+                                    <div class="col-md-2 col-sm-4">
+                                        <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                            data-toggle="modal" data-target=".Visit-Screen-modal">Add Visit Screen
+                                        </button>
+                                        <div class="modal Visit-Screen-modal animate fadeIn" id="Visit-Screen-modal"
+                                            data-animation="fadeIn" tabindex="-1" style="display: none;">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" id="Patiant_Case_History"
+                                                            data-dismiss="modal" aria-label="Close"><span
+                                                                aria-hidden="true">×</span></button>
+                                                        <h4>New Visit Screen</h4>
+                                                        <hr>
+                                                        <form action="{% url 'Admission:Patient_Admission_Doctor_Visit_Case_View'%}"  method="POST" enctype="multipart/form-data">
+                                                            <input type="hidden" name="id" maxlength="21" class="form-control" value="{{data.id}}" id="id">
+                                                            {% csrf_token %} 
+                                                            {% for field_Note in Visit_Case_Form %}
+                                                                <div class="col-md-4col-md-4">
+                                                                    <h4>{{ field_Note.label }}</h4>
+                                                                    <div class="form-group has-success">
+                                                                        {{ field_Note }}
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="col text-center">
+                                                                            <br>
+                                                                            <br>
+                                                                            <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                                                id="Vital-Signs-btn" value="Save" />
+                                                                        </div>
+                                                                    </div>
+                                                            
+                                                                </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End: Small modal -->
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div id="console"
+                                class="padding-top-small padding-right-small padding-left-small padding-bottom-small margin-bottom-0 box-shadow-active">
+                                <h4>Patient Visit Case History</h4>
+                                <table class="table table-striped ">
+                                    <tr class="bg-info">
+                                        <th>History</th>
+                                        <th>Diagnosis</th>
+                                        <th>Examination</th>
+                                        <th>Examination</th>
+                                        <th>Doctor</th>
+                                        <th>Visit Case Date</th>
+                                        
+                                    </tr>
+    
+                                    <tbody id="Case_History_Table">
+                                        {% for x in visit_screan_id %}
+                                        <tr>
+                                            <td>{{x.History}}</td>
+                                            <td>{{x.Diagnosis}}</td>
+                                            <td>{{x.Examination}}</td>
+                                            <td>{{x.Doctor_Note}}</td>
+                                            <td>{{x.ins_user_code.first_name}}</td>
+                                            <td>{{x.ins_user_date |date:'d-m-Y G:i'}}</td>
+                                            
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="Doctor_Order">
+                            <div class="clearfix">
+                                <div class="col-md-12 service light">
+                                    <div class="col-md-2 col-sm-4">
+                                        <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                            data-toggle="modal" data-target=".Visit-Order-modal">Add Order </button>
+                                        <div class="modal Visit-Order-modal animate bounceIn" id="Visit-Order-modal"
+                                            data-animation="bounceIn" tabindex="-1" style="display: none;">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" id="Patiant_Case_Order"
+                                                            data-dismiss="modal" aria-label="Close"><span
+                                                                aria-hidden="true">×</span></button>
+                                                        <h4>New Order</h4>
+                                                        <hr>
+                                                        <Form action="{% url 'Admission:Patient_Admission_Doctor_Order_View'%}"  method="POST" enctype="multipart/form-data">
+                                                            <input type="hidden" name="id" maxlength="21" class="form-control" value="{{data.id}}" id="id">
+                                                            {% csrf_token %} 
+                                                            {% for field_Note in Visit_Order_Form %}
+                                                                <div class="col-md-4col-md-4">
+                                                                    <h4>{{ field_Note.label }}</h4>
+                                                                    <div class="form-group has-success">
+                                                                        {{ field_Note }}
+                                                                    </div>
+                                                                </div>
+                                                                {% endfor %}
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="col text-center">
+                                                                            <br>
+                                                                            <br>
+                                                                            <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                                                id="Vital-Signs-btn" value="Save" />
+                                                                        </div>
+                                                                    </div>
+                                                            
+                                                                </div>
+                                                        </Form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div>
+                                <h4> Order Case List</h4>
+                                <table class="table table-striped padding-top-medium box-shadow-active">
+                                    <tr class="bg-info">
+                                        <th>Order No</th>
+                                        <th>Order_Time</th>
+                                        <th>Dr_Order</th>
+                                        <th>Doctor</th>
+                                        <th>Nurse_Note</th>
+                                        <th>Nurse_Result_Time</th>
+                                        <th>Order_Status</th>
+                                    </tr>
+                                    <tbody id="Case_Order_Table">
+                                        {% for x in Visit_order %}
+                                        <tr>
+                                            <th>{{ x.id }}</th>
+                                            <td>{{ x.ins_user_date |date:'d-m-Y G:i' }}</td>
+                                            <td>{{ x.Dr_Order }}</td>
+                                            <td>{{ x.ins_user_code.first_name }}</td>
+                                            <td>{{ x.Nurse_Note }}</td>
+                                            <td>{{ x.Nurse_Result_Time |date:'d-m-Y G:i' }}</td>
+                                            <td>{{ x.order_status }}</td>
+                                            <td>
+                                                {% if x.order_status == True %}
+                                                {% if x.Visit_Files %}
+                                                <a href="{% url 'Patient_Visits:order_pdf' x.id %}" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" target="_blank">
+                                              Show Files</a>
+                                              {% else %}
+                                              <span class="text-muted"></span>
+                                             {% endif %}
+                                             {% endif %}
+                                              </td> 
+    
+    
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="Radiology">
+                            <div class="clearfix">
+                                <div class="col-md-12 service light">
+                                    <div class="col-md-2 col-sm-4">
+                                        <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                            data-toggle="modal" data-target=".Radiology_Visit" id="Add_Radiology">Add Radiology Order</button>
+                                        <div class="modal Radiology_Visit animate bounceIn" id="Radiology_Visit"
+                                            data-animation="bounceIn" tabindex="-1" style="display: none;">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" id="Patiant_Case_Order"
+                                                            data-dismiss="modal" aria-label="Close"><span
+                                                                aria-hidden="true">×</span></button>
+                                                        <h4>New Radiology Order</h4>
+                                                        <hr>
+                                                        <form id="Patiant_Case_Xray_Save">
+                                                            {% include 'addmission/Doctor/Forms/xray-form.html' %}
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Xray List</h4>
+                                <div id="Xray_Vis_List"></div>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="labotory">
+                        <div class="clearfix">
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('CHEM' , {{data.id}})">CHEM</button>
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('BACT', {{data.id}})">BACT</button>
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('VIRO', {{data.id}})">VIRO</button>
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('SERO', {{data.id}})">SERO</button>
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('HEMA' , {{data.id}})">HEMA</button>
+                            <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+                                onClick="lab_list('hormon', {{data.id}})">hormon</button>
+    
+                        </div>
+                        <form id="patiant_no_lab_form">
+                            <input type="hidden" name="visit_Order_id" maxlength="120" class="form-control"
+                                id="visit_Case_id" value="{{data.id}}">
+                            <input type="hidden" name="patiant_no" maxlength="120" class="form-control" id="patiant_no_lab"
+                                value="{{data.patiant_no}}">
+                        </form>
+                        <div class="well box-shadow-active">
+                            <dev >
+                                <input type="hidden" name="visit_Case_id" maxlength="120" class="form-control"
+                                id="lab_tybe_id" >    
+                            </dev>
+                            <div class="row checklist" id="labotory_list">
+                                
+                            </div>
+                            <button type="button" class="btn btn-base text-weight-700 text-uppercase btn-demo-margin-bottom"
+                                id="btn-tst">Send</button>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="Transfer">
+                        <div class="clearfix">
+                            <div class="col-md-6 service light">
+                                <h4>Transfer Patient</h4>
+                                <hr>
+                                <form action="{% url 'Admission:Patient_Admission_Transfer_View'%}"  method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" maxlength="21" class="form-control" value="{{data.id}}" id="id">
+                                    {% csrf_token %} 
+                                    {% for field_Note in Transfer_Forms %}
+                                        <div class="col-md-12 ">
+                                            <h4>{{ field_Note.label }}</h4>
+                                            <div class="form-group has-success">
+                                                {{ field_Note }}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        <div class="col-md-4">
+                                            <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                        id="Vital-Signs-btn" value="Save" />
+                                        </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6 service light">
+                                <h4>Discharge Patient</h4>
+                                <hr>
+                                <form  enctype="multipart/form-data">
+                                    <input type="hidden" name="id" maxlength="21" class="form-control" value="{{data.id}}" id="id">
+                                    {% csrf_token %} 
+                                    
+                                        <div class="col-md-12 ">
+                                            <h4>{{ Discharge_Form.Discharge_Description.label }}</h4>
+                                            <div class="form-group has-success">
+                                                {{ Discharge_Form.Discharge_Description }}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                        id="Vital-Signs-btn" value="Save" />
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 box-shadow-active border-light">
+           
+            <div class="margin-top-small text-left">
+                <h4 class="text-weight-700 text-uppercase">Last Vital Signs</h4>
+                <div class="separator dark"><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+            </div>
+            <div class="row">
+               
+                
+                <div class="col-sm-12 service base">
+                    <div class="service-icon">
+                        <i class="fa fa-copyright"></i>
+                    </div>
+                    <div class="service-text">
+                        <h4 class="text-capitalize text-weight-600"><a href="#">Temp : </a></h4>
+                        <p class="text-capitalize text-weight-400">{{vital.Temp}}</p>
+                    </div>
+                    <div class="timeline-list"></div>
+                </div>
+                <div class="col-sm-12 service base">
+                    <div class="service-icon">
+                        <i class="fa fa-heartbeat"></i>
+                    </div>
+                    <div class="service-text">
+                        <h4 class="text-capitalize text-weight-600">Blood Pressure :</h4>
+                        <p class="text-capitalize text-weight-400">{{vital.Blood_pressure}}</p>
+                    </div>
+                    <div class="timeline-list"></div>
+                </div>
+                <div class="col-sm-12 service base">
+                    <div class="service-icon">
+                        <i class="fa fa-gratipay"></i>
+                    </div>
+                    <div class="service-text">
+                        <h4 class="text-capitalize text-weight-600">Spo2 :</h4>
+                        <p class="text-capitalize text-weight-400">{{vital.spo2}} %</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 service base">
+                    <div class="service-icon">
+                        <i class="fa fa-percent"></i>
+                    </div>
+                    <div class="service-text">
+                        <h4 class="text-capitalize text-weight-600">Resp Rate :</h4>
+                        <p class="text-capitalize text-weight-400">{{vital.Resp_rate}}</p>
+                    </div>
+                </div>
+                <div class="col-sm-12 service base">
+                    <div class="service-icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="service-text">
+                        <h4 class="text-capitalize text-weight-600">Height :</h4>
+                        <p class="text-capitalize text-weight-400">{{vital.Height}}</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-4 margin-top-small">
+                <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" data-toggle="modal" data-target=".fadeIn-modal">Show More List Vital Signs</button>
+                <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" data-toggle="modal" data-target=".fadeIn-modal">Show More List Vital Signs</button>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-4">
+            <!-- Begin: Small modal -->
+            
+
+            <div class="modal fadeIn-modal animate fadeIn" data-animation="fadeIn" tabindex="-1" style="display: none;">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <h4 class="title text-capitalize
+                                    margin-bottom-0">{{data.Patient_No.patiant_no}}
+                                </h4>
+                            <h4>  {{ data.Patient_No.en_patiant_name }}
+                                <span class="text-muted">{{ data.Patient_No.ar_patiant_name }}</span></h4>
+                            <hr>
+                            <br>
+                            <table class="table table-striped margin-bottom-medium">
+                                <tr class="bg-info">
+                                    <th>Temp</th>
+                                    <th>Blood_pressure</th>
+                                    <th>spo2</th>
+                                    <th>Resp rate</th>
+                                    <th>Insert By</th>
+                                    <th>Insert Date</th>
+                                    
+                                </tr>
+
+                                <tbody id="Case_History_Table">
+                                    {% for x in vital_sings %}
+                                    <tr>
+                                        <td>{{x.Temp}}</td>
+                                        <td>{{x.Blood_pressure}}</td>
+                                        <td>{{x.Blood_pressure}}</td>
+                                        <td>{{x.Resp_rate}}</td>
+                                        <td>{{x.ins_user_code.first_name}}</td>
+                                        <td>{{x.ins_user_date |date:'d-m-Y  G:i'}}</td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End: Small modal -->
+        </div>
+    </div>
+</section>
+
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/jquery_3.3.1_jquery.min.js' %}"></script>
+
+<script>
+
+
+
+
+
+    $(document).ready(function () {
+        var xray_data = []
+        $("#Patiant_Case_Xray_Save").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#Patiant_Case_Xray_Save").serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'Visit_Clinic:Patiant_Case_Xray_Save' %}",
+                data: formData,
+                success: function (response) {
+                    $("#Patiant_Case_Xray_Save").trigger('reset');
+                    alert("Done Xray ")
+                    Patiant_xray_List()
+                    document.getElementById('Radiology_Visit').click();
+                    
+
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+
+        })
+    });
+
+
+    
+
+
+    function rep(data) {
+        var rep = document.getElementById('show_report')
+        var rep = document.getElementById('show_report')
+        for (var i = 0; i < data.length; i++) {
+            var row_rep = `<dev>${data[i].id}</dev>`
+            rep.innerHTML += row_rep
+
+        }
+    }
+    function shoe_rep(report_id) {
+        var rep = document.getElementById('show_report')
+        var rep_data = []
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'Visit_Clinic:show_report_xray' %}",
+            data: {
+                'report_id': report_id
+            },
+            success: function (response) {
+
+                document.getElementById("show_report").innerHTML = `<dev><p>${response.Report_time}</p>${response.Report_details}<p></p></dev>`
+                document.getElementById("show_report2").innerHTML = (response.Report_time)
+
+            },
+            error: function (response) {
+                // alert the error if any error occured
+
+            }
+
+        })
+    }
+
+    function Patiant_xray_List() {
+
+        visit_xray = $('#visit_xray_id').val();
+        var Add_Radiology = document.getElementById('Add_Radiology')
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'Visit_Clinic:xray_visit_list' %}",
+            data: {
+                'visit_xray': visit_xray
+            },
+            success: function (data) {
+                if (data.is_exists == false) {
+                    Add_Radiology.disabled = true;
+                cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos : 'middle', hPos : 'center' });
+              } else {
+                Add_Radiology.disabled = false;
+                $('#Xray_Vis_List').html(data);
+              }
+               
+            },
+            error: function (response) {
+                // alert the error if any error occured
+
+            }
+
+        })
+    }
+
+
+    function lab_list(lab_type , id) {
+        var term = lab_type
+        var lab_lis = []
+        var visit_id = id
+        var tybe_id = document.getElementById('lab_tybe_id')
+       
+        $.ajax({
+            dataType: 'json',
+            data: {
+                'term': term ,
+                'visit_id' :visit_id
+            },
+            url: "{% url 'labotory:get_Labotory_Tybe' %}",
+            // on success
+            success: function (response) {
+                lab_lis = response.data
+                //tybe_id.innerHTML = tybe_id_html
+                document.getElementById('lab_tybe_id').value = response.tybe_id
+                Lab_List_Table(lab_lis)
+                document.getElementById("btn-tst").style.visibility = "visible";
+            },
+            // on error
+
+        });
+
+        return false;
+    }
+    function Lab_List_Table(data) {
+        var list_lab_id = document.getElementById('labotory_list')
+        $("#labotory_list").empty();
+        for (var i = 0; i < data.length; i++) {
+
+            var list_ruslet = `
+            
+                            
+                                <div class="checkbox col-xs-6 col-sm-4 col-md-3 col-lg-2">
+                                    <label style="white-space: nowrap;"><input type="checkbox" id="${data[i].id}" value="${data[i].id}" >${data[i].test_name}</label>
+                                </div>
+            `
+            list_lab_id.innerHTML += list_ruslet
+            
+
+        }
+    }
+</script>
+<script>
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+    $(document).ready(function () {
+        $('#btn-tst').click(function () {
+
+            var id = [];
+            $(':checkbox:checked').each(function (i) {
+                id[i] = $(this).val();
+            })
+            if (id.length === 0) {
+                alert("Please select items ")
+            } else {
+                var patiant_no_lab = new $("#patiant_no_lab").val();
+                var tybe_id = new $("#lab_tybe_id").val();
+                var visit_Case_id = new $("#visit_Case_id").val();
+                var formlabData = new $("#patiant_no_lab_form").serialize();
+                console.log(id);
+                $.ajax({
+                    url: "{% url 'labotory:visit_lab_order_list' %}",
+                    method: "POST",
+                    data: {
+                        tybe_id :tybe_id ,
+                        id: id,
+                        visit_Case_id: visit_Case_id,
+                        patiant_no_lab: patiant_no_lab,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function (response) {
+                        $("#labotory_list").empty();
+                        $('#labotory_list').append(response);
+                        document.getElementById("btn-tst").style.visibility = "hidden";
+                    },
+                    error: function (error) {
+                        alert(error.error)
+                    }
+                })
+            }
+
+
+        })
+
+    })
+
+
+    function Visit_Lab_List_Order(data) {
+        var list_lab_id = document.getElementById('labotory_list')
+        $("#labotory_list").empty();
+        for (var i = 0; i < data.length; i++) {
+            var m = new Date(data[i].ins_user_date);
+            var DateTimeFormate = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+            var row = `<tr>
+							<td>${data[i].id}</td>
+							<td>${DateTimeFormate}</td>
+                            <td>${data[i].Lab_Test}</td>
+                            <td>${data[i].Specimens_Arrival_Status}</td>
+					  </tr>`
+            list_lab_id.innerHTML += row
+
+        }
+    }
+
+   
+</script>
+
+{% endblock javascript %}

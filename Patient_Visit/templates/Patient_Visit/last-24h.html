@@ -1,0 +1,38 @@
+
+<table class="table table-bordered text-weight-700">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Patiant File NO</th>
+            <th>AR Name</th>
+            <th>EN Name</th>
+            <th>ER Clinic</th>
+            <th>Date Join</th>
+            <th>Status</th>
+            
+            
+            
+        </tr>
+    </thead>
+    <tbody >
+        {% for line in data %}
+        <tr id="patiant_select_clinic">
+            
+            <th >{{ line.id }}</th>
+            <td>{{ line.Patiant_No.patiant_no }}</td>
+            <td>{{ line.Patiant_No.ar_patiant_name }}</td>
+            <td>{{ line.Patiant_No.en_patiant_name }}</td>
+            <td>{{ line.Clinic_Name }}</td>
+            <td>{{ line.Visit_Date |date:'d-m-Y G:i' }}</td>
+            {% if line.Visit_Opened_status == True %}
+                    <td class="success">Visited</td>
+                    {% else %}
+                    <td class="danger">Wating</td>
+                    {% endif %}
+            
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

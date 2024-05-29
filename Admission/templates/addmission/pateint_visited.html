@@ -1,0 +1,396 @@
+
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+    .id_bed {
+        min-width: 200px;
+    }
+
+    .select2-container .select2-selection--single {
+        min-height: 40px;
+        padding-top: 5px;
+    }
+
+    .select2-results__option {
+        color: black;
+    }
+</style>
+<section class="parallax page-main-heading padding-top-large padding-bottom-large text-white">
+    <div class="parallax_child img-medico-3" style="transform: translate3d(0px, -4.98186px, 0px);"></div>
+    <div class="container position-relative z-index-2">
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <h2 class="text-weight-300">{{data.Section_Name}}</h2>
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                    <li class="active">Departement {{data.Section_Name}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="overlay dark-5"></div>
+</section>
+<section class="light-bg padding-0 box-shadow-active">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 text-center white-bg padding-top-medium padding-bottom-medium">
+                <div class="counter-number">
+                    <i class="fa fa-user text-size-40px"></i>
+                    <div class="counternumber text-weight-600 text-size-xsmall margin-top-small margin-bottom-small" data-from="0" data-to="10" data-speed="1500">10</div>
+                    <p class="text-capitalize text-black text-spacing-1">All Pateiant</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center padding-top-medium padding-bottom-medium">
+                <div class="counter-number">
+                    <i class="fa fa-user text-size-40px"></i>
+                    <div class="counternumber text-weight-600 text-size-xsmall margin-top-small margin-bottom-small" data-from="0" data-to="{{Patient_Visited_count}}" data-speed="1500">{{Patient_Visited_count}}</div>
+                    <p class="text-capitalize text-black text-spacing-1">Pateiant To Day</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center white-bg padding-top-medium padding-bottom-medium">
+                <div class="counter-number">
+                    <i class="fa fa-bed text-size-40px"></i>
+                    <div class="counternumber text-weight-600 text-size-xsmall margin-top-small margin-bottom-small" data-from="0" data-to="5" data-speed="1500">5</div>
+                    <p class="text-capitalize text-black text-spacing-1">Total Available Bed</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 text-center padding-top-medium padding-bottom-medium">
+                <div class="counter-number">
+                    <i class="fa fa-bed text-size-40px"></i>
+                    <div class="counternumber text-weight-600 text-size-xsmall margin-top-small margin-bottom-small" data-from="0" data-to="9" data-speed="1500">9</div>
+                    <p class="text-capitalize text-black text-spacing-1">Rooms</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="light-bg padding-top-large padding-bottom-large">
+    <div class="container">  
+        <div class="page-header margin-top-small">
+            <h3>New Pateiant <span class="label label-base">{{Patient_Visited_count}}</span></h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 service light">
+                <table class="table ">
+                  <thead>
+                    <tr>
+                      <th class="text-center" scope="col">#</th>
+                      <th class="text-center" scope="col">Patiant_no</th>
+                      <th class="text-center" scope="col">Patiant_name</th>
+                      <th class="text-center" scope="col">Admission</th>
+                      <th class="text-center" scope="col">Clinic_Name</th>
+                      <th class="text-center" scope="col">By Doctor</th>
+                      <th class="text-center" scope="col">Date</th>
+                      
+                      <th>
+                        action
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for x in Patient_Visited_False %}
+                    <tr>
+                      <th class="text-center" scope="row">{{ x.id }}</th>
+                      <th class="text-center">{{ x.Patient_No }}</th>
+                      <th class="text-center">
+                        {{ x.Patient_No.en_patiant_name }}
+                        <span class="text-muted">{{ x.Patient_No.ar_patiant_name }}</span>
+                    </th>
+                      <th class="text-center">{{ x.Admission_Section_Date |date:'d-m-Y G:i ' }}</th>
+                      <td class="text-center">{{ x.Patient_visited_id.Clinic_Name }}</td>
+                      <td class="text-center">{{ x.Patient_visited_id.ins_user_code.first_name }}</td>
+                      <td class="text-center">{{ x.Patient_visited_id.Admission_Date |date:'d-m-Y G:i ' }}</td>
+                      
+
+                      <td class="text-center">
+                        <button type="button" class="btn btn-primary text-weight-500 btn-block btn-demo-margin-bottom" data-toggle="modal" data-target=".{{ x.id }}-modal">Assgin To Bed</button>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger text-weight-700 text-uppercase btn-demo-margin-bottom" onClick="Reject_to_doctor({{x.id}})" >Reject </button>
+                    </td>
+               
+                    </tr>
+                    <div class="col-md-4 col-md-4">
+                        <!-- Begin: Small modal -->
+                        <div class="modal {{ x.id }}-modal animate fadeIn" data-animation="fadeIn" tabindex="-1" style="display: none;">
+                            <div class="modal-dialog modal-md" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4>Assgin Pateont To Bed</h4>
+                                        <span class="text-muted">{{ x.id }}</span>
+                                        <div class="form-row ">
+                                            <dev class="row padding-top-small padding-bottom-small">
+                                                <div class="col-md-6 col-md-4">
+                                                    <div class="form-group has-success">
+                                                        <label class="control-label">Select Room Number</label>
+                                                        <select name="gender" class="form-control" required="" id="id_room" name="id_room">
+                                                            {% for room in room_list %}
+                                                            
+                                                            <option id="{{ room.id }}" value="{{ room.Room_Number }}">{{ room.Room_Number }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="col-md-6 col-md-4">
+                                                    <div class="form-group has-success">
+                                                    <div id="room_List_bed_dev">
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                            </dev>
+                                            
+                                        </div>
+                                           
+                                       
+                                        
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default text-weight-700 text-uppercase" data-dismiss="modal">Close</button>
+                                        <button type="submit " class="btn btn-primary " onClick="Assgin_Pateont_To_Bed({{x.id}})" >submit</button>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        <!-- End: Small modal -->
+                    </div>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <div class="price-detail">
+                    <div class="price text-white">  <i class="fa fa-bed margin-left-0">| 203 <strong class="margin-left-medium">A</strong> </i></div>
+                </div>
+              </div>
+            <div class="col-md-2 col-sm-4">
+                <!-- Begin: Small modal -->
+                
+
+                
+                <!-- End: Small modal -->
+            </div>
+            <div class="col-md-9">
+                <div class="widget margin-bottom-medium">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="box-shadow-active padding-top-large">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="margin-bottom-medium text-center">
+                    
+                    <h1 class="text-weight-700 text-uppercase ">Bed List</h1>
+                    <div class="separator dark"><span class="short-line"></span><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+                </div>
+            </div>
+        </div>
+        {% for cc in Patient_Visited_True %}
+
+        <br>
+        {{c.id}}
+
+        {% endif %}
+        <div class="row">
+            {% for in_Bed in Patient_Visited_True %}
+            {% if in_Bed.Accept_OF_Section_Status == False %}
+            <table class="table ">
+                <thead>
+                  <tr>
+                    <th class="text-center" scope="col">#</th>
+                    <th class="text-center" scope="col">tiant_no</th>
+                    <th class="text-center" scope="col">Patiant_name</th>
+                    <th>
+                      action
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  
+                  <tr>
+                    <th class="text-center" scope="row">{{ in_Bed.id }}</th>
+                    <th class="text-center">{{ in_Bed.Patient_No }}</th>
+                    <th class="text-center">
+                      {{ in_Bed.Patient_No.en_patiant_name }}
+                      <span class="text-muted">{{ in_Bed.Patient_No.ar_patiant_name }}</span>
+                  </th>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-base text-weight-700 text-uppercase btn-demo-margin-bottom" onClick="Patient_Accept({{in_Bed.id}})" > Accept Patient  </button>
+                </td>
+                  </tr>
+                </tbody>
+              </table>
+              {% else %}
+              <div class="col-md-3 col-sm-6">
+                <div class="pricing-table light-bg  box-shadow-active border-light base white-bg">
+                    <div class="price-detail">
+                        <div class="price text-white">  <i class="fa fa-bed margin-left-1 margin-top-2">| {{ in_Bed.ROOM_NO.Room_Number }} <strong class="margin-left-medium">{{ in_Bed.BED.Bed_Num }}</strong> </i></div>
+                    </div>
+                    <div class="time"><h2 class="text-weight-700">{{ in_Bed.Patient_No }}</h2></div>
+                    <li class="text-black"><h5 class="text-weight-700">{{ in_Bed.Patient_No.en_patiant_name }}</h5><span  ><h4 class="text-weight-700">{{ in_Bed.Patient_No.ar_patiant_name }}</h4></span></li>
+                    <ul>
+                        <li class="text-black"><a class="text-black text-weight-700">Visit Date: </a> <a class="text-black text-weight-700">{{in_Bed.Admission_Section_Date |date:'d-m-Y H:m'}}</a></li>
+                        <li><div class="separator dark"><i class="short-line"></i><i class="fa fa-circle-o"></i><i class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div></li>
+                        <td>
+                            
+                            <button type="button" class="btn btn-dark transparent text-uppercase" title="Add Vital Sings" data-toggle="modal" data-target=".Vital-Sings-{{in_Bed.id}}"><i class="fa fa-heartbeat"></i></button>
+                            <button type="button" class="btn btn-dark transparent text-uppercase" title="Nurse Note" data-toggle="modal" data-target=".Nurse-Note-{{in_Bed.id}}"><i class="fa fa-file-text-o"></i></button>
+                            
+                            <div class="btn-group ">
+                                <button class="btn btn-base" type="button">More</button>
+                                <button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-base dropdown-toggle" type="button"> <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span> </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Service 1</a></li>
+                                    <li><a href="#">Service 2</a></li>
+                                    <li><a href="#">Service 3</a></li>
+                                    <li class="divider" role="separator"></li>
+                                    <li><a href="#">Service 4</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="modal Vital-Sings-{{in_Bed.id}} animate bounceIn" id="{{in_Bed.id}}"
+                        data-animation="bounceIn" tabindex="-1" style="display: none;">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" id="Patiant_Case_Order"
+                                        data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                    <h4>Add Vital Sings From :   {{in_Bed.Patient_No.en_patiant_name}}</h4>
+                                    <hr>
+                                    <form id="Patiant_Case_Order_Save">
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal Nurse-Note-{{in_Bed.id}} animate bounceIn" id="{{in_Bed.id}}"
+                        data-animation="bounceIn" tabindex="-1" style="display: none;">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" id="Patiant_Case_Order"
+                                        data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                    <h4>Add Note From :  {{in_Bed.Patient_No.en_patiant_name}}</h4>
+                                    <hr>
+                                    <form id="Patiant_Case_Order_Save">
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                 
+            
+            {% endfor %}
+            
+            
+        </div>
+    </div>
+    
+
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/jquery_3.3.1_jquery.min.js' %}"></script>
+<script>
+    var id_rom =  10
+    $("#id_room").change(function () {
+        var room_id = $(this).val();
+
+        
+        $.ajax({
+            url: "{% url 'Admission:load_Bed' %}",
+            data: {
+                'room_id': room_id
+            },
+            success: function (data) {
+                $("#room_List_bed_dev").empty();
+                $('#room_List_bed_dev').append(data);
+                
+            },
+
+        });
+    });
+    
+
+    function Assgin_Pateont_To_Bed(id) {
+        var id_room = document.getElementById('id_room').value
+        var id_bed = document.getElementById('id_bed').value
+        
+    console.log(id_room)
+    console.log(id_bed)
+    $.ajax({
+            url: "{% url 'Admission:Assgin_Pateont_To_Bed_view' %}",
+            data: {
+                'id_room': id_room ,
+                'id_bed': id_bed ,
+                'id': id ,
+            },
+            success: function (data) {
+                location.reload();
+                
+            },
+
+        });
+
+}
+function Reject_to_doctor(id) {
+
+    $.ajax({
+            url: "{% url 'Admission:Reject_to_doctor_view' %}",
+            data: {
+                'id': id ,
+            },
+            success: function (data) {
+                location.reload();
+                
+            },
+
+        });
+
+}
+
+function Patient_Accept(id) {
+
+$.ajax({
+        url: "{% url 'Admission:Patient_Accepted_Section_Status_view' %}",
+        data: {
+            'id': id ,
+        },
+        success: function (data) {
+            location.reload();
+            
+        },
+
+    });
+
+}
+</script>
+
+{% endblock javascript %}

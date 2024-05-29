@@ -1,0 +1,51 @@
+<div class="row">
+    {% csrf_token %}
+    
+    <div class="form-row ">
+        
+        
+        <div class="col-md-6 col-md-4 margin-right-0 margin-left-0">
+            
+            <div class="form-group has-success">
+                <div class="col-md-12">
+                    <div class="col-md-5">
+                        <label class="control-label">Blood pressure</label>
+                        <input type="text" name="pressure_1" maxlength="21" class="form-control" id="pressure_1">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label"></label>
+                        <h4>/</h4>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="control-label">Blood pressure</label>
+                        <input type="text" name="pressure_2" maxlength="21" class="form-control" id="pressure_2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for field in Vital_Signs_Form_View %}
+        <div class="col-md-6 col-md-4">
+            <label class="control-label">{{ field.label }}</label>
+            <div class="form-group has-success">
+                {{ field }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="form-group has-success">
+        <input type="hidden" name="visit_no_id" maxlength="120" class="form-control"
+            id="visit_no_id" value="{{data.id}}">
+    </div>
+    <div class="form-group has-success">
+        <input type="hidden" name="patiant_no" maxlength="120" class="form-control"
+            id="patiant_no" value="{{data.patiant_no}}">
+    </div>
+    <div class="col-md-6">
+        <div class="col text-center">
+            <br>
+            <br>
+            <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                id="Vital-Signs-btn" value="Save" />
+        </div>
+    </div>
+</div>

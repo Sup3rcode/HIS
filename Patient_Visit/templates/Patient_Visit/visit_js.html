@@ -1,0 +1,219 @@
+<script>
+  
+  function id_social_number_INTGER(id) {
+  var num = id
+  console.log(typeof num);
+
+  if (Number.isInteger(+num)) {
+   
+  } else {
+    cosyAlert('<strong>Error</strong><br /><strong>INPUT NOT INTGER الرجاء إدخال رقم فقط</strong>', 'error', { vPos: 'middle', hPos: 'center' });
+    document.getElementById("show").innerHTML = "Number is not integer";
+  }
+}
+  
+  function Last_Patiant_24H() {
+    $.ajax({
+      url: "{% url 'Patient_Visit:Last_Patiant_24H' %}",
+      success: function (data) {
+        $('#Patiant_24H').html(data);
+      }
+    });
+  }
+  document
+    .getElementById("id_social_number")
+    .addEventListener("change", function () {
+      var social_number = $(this).val();
+      
+      // create an AJAX call
+      $.ajax({
+        data: {
+          social_number: social_number,
+        },
+        url: "{% url 'Patient_Files:validate_saudi_id' %}",
+        // on success
+        success: function (data) {
+          if (data.is_taken == false) {
+            cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos: 'middle', hPos: 'center' });
+            cosyAlert('Custom ', 'notice', { container: '#place-for-mr-special' });
+            $("#id_social_number").val("").focus();
+            $("#btnSubmit").attr("disabled", true);
+          } else {
+            $("#usernameError").remove();
+            $.ajax({
+              url: "{% url 'Patient_Files:validate_social_number' %}",
+              data: {
+                social_number: social_number,
+              },
+              dataType: "json",
+              success: function (data) {
+                if (data.is_exists == true) {
+                  cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos: 'middle', hPos: 'center' });
+                  $("#id_social_number").val("").focus();
+                  $("#btnSubmit").attr("disabled", true);
+                } else {
+                  $("#id_social_number")
+                    .removeClass("is-invalid")
+                    .addClass("is-valid");
+                  $("#usernameError").remove();
+                  $("#btnSubmit").attr("disabled", false);
+                  hideLoadingDiv();
+                }
+                
+              },
+            });
+          }
+        },
+        // on error
+        error: function (response) {
+          // alert the error if any error occured
+          console.log(response.responseJSON.errors);
+        },
+      });
+
+      return false;
+    });
+  //
+  //patiant_search_input
+
+
+
+  document
+    .getElementById("id_ar_patiant_name")
+    .addEventListener("change", function () {
+      var ar_name = $(this).val();
+      // create an AJAX call
+      $.ajax({
+        data: {
+          ar_name: ar_name,
+        },
+        url: "{% url 'Patient_Files:ar_convert' %}",
+        // on success
+        success: function (response) {
+          document.getElementById("id_en_patiant_name").value = (response.en_txt)
+        },
+        // on error
+        error: function (response) {
+          // alert the error if any error occured
+          console.log(response.responseJSON.errors);
+        },
+      });
+
+      return false;
+    });
+
+
+
+
+  function Cheack_Visit(id) {
+    
+    $.ajax({
+              url: "{% url 'Patient_Visit:validate_Visit' %}",
+              data: {
+                P_id: id,
+              },
+              dataType: "json",
+              success: function (data) {
+                if (data.is_exists == true) {
+                  cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos: 'middle', hPos: 'center' });
+                 
+                  
+                  document.getElementById("Clinic_Reception_File_NO").value = ""
+                  document.getElementById("social_number").value = ""
+                  document.getElementById("ar_name").value = ""
+                  document.getElementById("en_patiant_name").value = ""
+                  document.getElementById("id_birth_date").value = ""
+                  
+                }else {
+                  document.getElementById("clinic_reception").disabled = false
+                }
+              },
+            });
+  }
+
+  //patiant create new file
+
+  $("#Create_new_FILE").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var formData = new $("#Create_new_FILE").serialize();
+    // make POST ajax call
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'Patient_Files:Create_new_FILE' %}",
+      data: formData,
+      success: function (response) {
+
+        document.getElementById("id_patiant_no_form").value = (response.pateiant_no)
+        document.getElementById("add_new_Patiant_file").style.visibility = "visible";
+        document.getElementById("create_patiant_file").disabled = true;
+
+      },
+      error: function (response) {
+        // alert the error if any error occured
+        alert(response["responseJSON"]["error"]);
+      }
+
+    })
+
+  })
+
+  //patiant send to clinic
+
+  $("#Send_Pateiant_To_Clinic").submit(function (e) {
+    // preventing from page reload and default actions
+    e.preventDefault();
+    // serialize the data for sending the form data.
+    var formData = new $("#Send_Pateiant_To_Clinic").serialize();
+    // make POST ajax call
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'Patient_Visit:Send_Pateiant_To_Clinic' %}",
+      data: formData,
+      success: function (response) {
+        $("#Send_Pateiant_To_Clinic").trigger('reset');
+        Last_Patiant_24H()
+        document.getElementById("social_number").value = ""
+                  document.getElementById("ar_name").value = ""
+                  document.getElementById("en_patiant_name").value = ""
+                  document.getElementById("id_birth_date").value = ""
+      },
+      error: function (response) {
+        // alert the error if any error occured
+        Last_Patiant_24H()
+      }
+
+    })
+
+  })
+
+
+
+  window.onload = function () {
+    Last_Patiant_24H()
+    document.getElementById("id_patiant_no_form").required = false
+    document.getElementById("id_patiant_no_form").disabled = true
+    document.getElementById("clinic_reception").disabled = true
+    document.getElementById("add_new_Patiant_file").style.visibility = "hidden";
+    document.getElementById("Pateint_d").style.visibility = "hidden";
+    $("#Create_new_FILE").trigger('reset');
+    $.ajax({
+      url: "{% url 'Patient_Visit:Last_Patiant_24H' %}",
+      success: function (data) {
+        $('#Patiant_24H').html(data);
+      }
+    });
+
+  }
+
+
+
+  function add_new_patiant_file() {
+    document.getElementById("add_new_Patiant_file").style.visibility = "hidden";
+    document.getElementById("create_patiant_file").disabled = false;
+    $("#Create_new_FILE").trigger('reset');
+  }
+  
+
+</script>

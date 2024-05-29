@@ -1,0 +1,154 @@
+{% extends '_base.html' %}
+
+
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Vital Sins & Visual Tryage</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#" id="Nurse_station_Reception"> Nurse
+                            station</a></li>
+                    <li class="breadcrumb-item "><a>Vital Sins & Visual Tryage</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+
+
+<section></section>
+<section class="padding-top-large padding-bottom-large">
+    <div class="container ">
+        <div class="callout light-bg text-black border-light margin-top-small margin-bottom-medium">
+            <div class="clearfix">
+                <div class="col-md-12">
+                    <div class="row equal-height-row">
+                        <div class="col-md-6 col-sm-6 equal-height-column" style="height: 111px;">
+                            <div class="row padding-top-small padding-bottom-small">
+                                <div class="col-sm-12">
+                                    <h3 class="margin-0 text-uppercase text-weight-600">Select Clinic</h3>
+                                    <dev class="row padding-top-small padding-bottom-small">
+                                        <div class="col-md-6 col-md-4">
+                                            <div class="form-group has-success">
+                                                
+                                                <select class="form-control" required="" id="id_clinic" name="id_clinic">
+                                                    <option value="" selected disabled>Please select Clinic</option>
+                                                    {% for x in visit_clinic_list %}
+                                                    <option id="{{ x.id }}" value="{{ x.id }}">{{ x.Clinic_Name }} </option>
+                                                    {% endfor %}
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                    </dev>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-4 equal-height-column" style="height: 111px;">
+                            <div class="row padding-top-small padding-bottom-small">
+                                <div class="col-md-12 callout-button-setting text-center">
+                                    <div class="btn-group btn-group-justified" role="group"
+                                        aria-label="Justified button group">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid " >
+        <div id="console" style="width: 400px;"></div>
+    </div>
+    
+</section>
+<div class="container-fluid padding-left-large padding-right-large padding-bottom-large">
+    <dev id="Clinic_list_Table">
+        <table class="table table-bordered text-left" >
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Patiant File NO</th>
+                    <th>AR Name</th>
+                    <th>EN Name</th>
+                    <th>ER tt Clinic</th>
+                    <th>Date Join</th>
+                    <th>Patiant Mode</th>
+                    <th>Vital Status</th>
+                    <th>Clinic Visit Status</th>
+        
+        
+                </tr>
+            </thead>
+            <tbody class="text-weight-600 text-uppercase">
+                {% for line in data %}
+                
+                <tr>
+                    <th>{{ line.id }}</th>
+                    <td><a href="{% url 'Visit_Clinic:Patiant_Visit_Case_View' line.id %}">{{ line.Patiant_No}}</a></td>
+                    <td>{{ line.Patiant_No.ar_patiant_name }}</td>
+                    <td>{{ line.Patiant_No.en_patiant_name }}</td>
+                    <td>{{ line.Clinic_Name }}</td>
+                    <td>{{ line.Visit_Date |date:'d-m-Y G:i' }}</td>
+
+                    {% if line.is_Transfer == True %}
+                                        <td class="warning">{{ line.Visit_Type }}</td>
+                                        {% else %}
+                                        <td>{{ line.Patiant_Mode }}</td>
+                                        {% endif %}
+                    {% if line.Vital_Signs_Status == True %}
+                    <td class="success">Visited</td>
+                    {% else %}
+                    <td class="danger">Wating</td>
+                    {% endif %}
+                    {% if line.Visit_Opened_status == True %}
+                    <td class="success">Visited</td>
+                    {% else %}
+                    <td class="danger">Wating</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </dev>
+    
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    $("#id_clinic").change(function () {
+        var id_clinic = $(this).val();
+        $.ajax({
+            url: "{% url 'Visit_Clinic:Get_Visit_By_Clinic_Name' %}",
+            data: {
+                'id_clinic': id_clinic
+            },
+            success: function (data) {
+                $("#Clinic_list_Table").empty();
+                $('#Clinic_list_Table').append(data);
+
+            }
+
+        });
+    });
+</script>
+
+{% endblock javascript %}

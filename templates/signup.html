@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>24Care </title>
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/select2.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'select2/css/select2.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/plugins-min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/menu-overright.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap4-toggle.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap4-toggle.min.css' %}">
+  <link href="{% static 'assets/css/aqua-yellow.css' %}" type="text/css" media="all" rel="stylesheet" id="colors" />
+  <link href="{% static 'assets/css/demo.css' %}" media="all" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/cosyAlert.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/cosyAlert.min.css' %}">
+  
+    rel="stylesheet">
+  {% block styles %}
+  {% endblock %}
+  <!-- End: MAIN CSS -->
+  <style>
+    .isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
+    .form-control {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-shadow: none !important;
+      margin-bottom: 15px;
+    }
+
+   
+
+
+
+  </style>
+</head>
+
+<body class="switcher_boxed boxed padding-top-large padding-bottom-large">
+
+  <div class="modal fade header-search" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="search">
+            <form method="get" action="search.html">
+                <div class="form-group full-width">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-lg" placeholder="Search Here..." value="" name="q">
+                        <div class="input-group-btn "><button type="submit" class="btn btn-base btn-lg"><i class="fa fa-search"></i></button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<section class="parallax padding-large fullscreen padding-top-large padding-bottom-large" >
+    <div class="parallax_child img-medico-2"></div>
+    <div class="vertical-content">
+        <div class="vertical-content-setting">
+            <div class="container position-relative z-index-2 fullscreen-setting ">
+                <div class="row ">
+                    <div class="col-md-4 col-sm-4"></div>
+                    <div class="col-md-6  light-bg padding-top-large padding-left-large padding-right-large padding-bottom-large">
+                        <p class="text-center header">
+                            <a class="logo" href="#"><span><i class="fa fa-info"></i></span> 24Care</a>
+                        </p>
+
+                        <form method="post" novalidate>
+                          {% csrf_token %}
+                          {% include 'includes/form.html' %}
+                          <div class="row margin-top-xsmall">
+                            <div class="col-md-12 col-sm-12">
+                                <button type="submit" value="Submit" class="btn btn-dark btn-lg transparent text-weight-600 text-uppercase">create</button>
+                                
+                            </div>
+                        </div>
+                        </form>
+                        <p class="text-center">&copy; Copyright All Rights Reserved by <a href="#">24Care</a></p>
+                    </div>
+                    <div class="col-md-4 col-sm-4"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay dark-6"></div>
+</section>
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap4-toggle.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap4-toggle.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  <script src="{% static 'assets/plugins/switcher/js/demo.js' %}"></script>
+  <script src="{% static 'assets/plugins/switcher/js/jquery.cookie.js' %}"></script>
+  <script src="{% static 'assets/js/select2.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'assets/js/cosyAlert.js' %}"></script>
+  <script>
+    function my_call() {
+      alert('WhatsApp : 0563481855')
+    }
+  </script>
+  {% block javascript %}
+
+  {% endblock javascript %}
+</body>
+
+  <footer id="footer" class="dark-bg box-shadow-active" >
+    <div class="bottom-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10 col-sm-10 text-right">
+            <p>© Copyright 2022 by <a href="#" onclick="my_call()">Nagib Alotiby</a>. All Rights Reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  </footer>
+
+</html>

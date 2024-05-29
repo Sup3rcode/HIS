@@ -1,0 +1,39 @@
+{% extends '_base.html' %}
+{%block title%}{{board.name}} {%endblock%}
+{% block breadcrumb %}
+
+   <li class="breadcrumb-item "><a href="{% url 'concatapp:home' %}">Boards</a></li>
+        <li class="breadcrumb-item active">{{usr.hospital_Name}} Users</li>
+     
+{%endblock%}
+
+
+{% block content %}
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>user</th>
+        <th>DEPARTEMNT</th>
+        <th>Active</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+      {% for x in profile %}
+     
+    <tr>
+        <td><a href="{% url 'concatapp:EdituserView' x.pk %}">{{ x.user}}</a></td>
+        
+        <td>{{x.hospital_Name}}</td>
+        <td>{{x.Active}}</td>
+        
+
+    </tr>
+    {%endfor%}
+
+    </tbody>
+</table>
+
+  </nav>
+{% endblock %}

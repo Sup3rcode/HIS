@@ -1,0 +1,292 @@
+{% load static %}
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Vital Sins & Visual Tryage</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{% url 'Patient_Visits:Nurse_station_Patiant_list' %}" id="Nurse_station_Reception"> Nurse
+                            station</a></li>
+                    <li class="breadcrumb-item "><a>Vital Sins & Visual Tryage</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+<section class="light-bg">
+
+<dev class="container border">
+    <div class="col-md-9 ">
+        <div class="page-content ">
+            <div class="container">
+
+                <div class="tabs-theme dark">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs text-weight-600" role="tablist">
+                        <li role="presentation" class="active"><a href="#xray_rec" aria-controls="services" role="tab"
+                                data-toggle="tab" aria-expanded="true">Patiaint Visit Status</a></li>
+                        <li role="presentation" class=""><a href="#xray_report" aria-controls="profile" role="tab"
+                                data-toggle="tab" aria-expanded="false">Order Report</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="xray_rec">
+                            <div class="clearfix">
+                                <h4 class="text-weight-600 text-uppercase upper-heading text-black"><span
+                                    class=" text-uppercase upper-heading text-black">File NO: {{ data.patiant_no }}</span></h4>
+                                    <h4 class="text-weight-600 text-uppercase upper-heading text-black"><span
+                                        class=" text-uppercase upper-heading text-black">Pateiant Name: {{ data.patiant_no.ar_patiant_name }}</span></h4>
+                                <div class="col-md-12 service light">
+                                    <form id="visit_xray_order">
+                                        <div class="row">
+                                            {% csrf_token %}
+                                            
+                                            <div class="form-row ">
+                                                {% for field in Patiant_order_Xray_Form %}
+                                                <div class="col-md-6 col-md-4">
+                                                    <label class="control-label">{{ field.label }}</label>
+                                                    <div class="form-group has-success">
+                                                        {{ field }}
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="form-group has-success">
+                                                <input type="hidden" name="visit_xray_id" maxlength="120" class="form-control"
+                                                    id="visit_xray_id" value="{{data.visit_xray.id}}">
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="col text-center">
+                                                        <br>
+                                                        <br>
+                                                        <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                                            value="Save" />
+                                                    </div>
+                                                </div>
+                                        
+                                            </div>
+                                        </div>
+                                    </form>
+        
+                                </div>
+                            </div>
+                            <div id="console"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="xray_report">
+                            <div class="clearfix">
+                                <div class="col-md-3 col-sm-6">
+        
+                                </div>
+                                <div class="col-md-12 text-center base ">
+                                    <form>
+                                      gggggggggggg
+                                    </form>
+        
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <div class="counter-number">
+                                        <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                                class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                                class="short-line"></span></div>
+        
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div id="console"></div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</dev>
+
+    </div>
+</section>
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/jquery_3.3.1_jquery.min.js' %}"></script>
+
+<script>
+    var myArray = []
+    $(document).ready(function () {
+        $("#visit_xray_order").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#visit_xray_order").serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'clinic:Xray_Reception_Order' %}",
+                data: formData,
+                success: function (response) {
+
+                    alert("Fuck Me ")
+                    document.getElementById('visit_xray_order').click();
+                    $("#visit_xray_order").trigger('reset');
+                    myArray = response.data
+                    buildTable(myArray)
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+
+        })
+    });
+    function buildTable(data) {
+        var table = document.getElementById('Case_History_Table')
+
+        $("#Case_History_Table").empty();
+        for (var i = 0; i < data.length; i++) {
+            var m = new Date(data[i].create_time);
+            var DateTimeFormate = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+            var row = `<tr>
+							<td>${data[i].History}</td>
+							<td>${data[i].Diagnosis}</td>
+							<td>${data[i].Examination}</td>
+                            <td>${data[i].Doctor_Note}</td>
+                            <td>${DateTimeFormate}</td>
+                            
+					  </tr>`
+            table.innerHTML += row
+
+        }
+    }
+
+
+
+    $(document).ready(function () {
+        var myorder = []
+        $("#Patiant_Case_Order_Save").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#Patiant_Case_Order_Save").serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'clinic:Patiant_Case_Order_Save' %}",
+                data: formData,
+                success: function (response) {
+
+                    alert("Fuck Order ")
+                    myorder = response.data
+                    OtderTable(myorder)
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+
+        })
+    });
+    function OtderTable(data) {
+        var Order_table = document.getElementById('Case_Order_Table')
+
+        $("#Case_Order_Table").empty();
+        for (var i = 0; i < data.length; i++) {
+            var m = new Date(data[i].Order_Time);
+            var Nrs = new Date(data[i].Nurse_Result_Time);
+            var DateTimeFormate = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+            var Nrs_Time = Nrs.getUTCFullYear() + "/" + (Nrs.getUTCMonth() + 1) + "/" + Nrs.getUTCDate() + " " + Nrs.getUTCHours() + ":" + Nrs.getUTCMinutes() + ":" + Nrs.getUTCSeconds();
+
+            var row = `<tr>
+							<td>${data[i].id}</td>
+							<td>${DateTimeFormate}</td>
+							<td>${data[i].Dr_Order}</td>
+                            <td>${data[i].Dr_Note}</td>
+                            <td>${data[i].Nurse_Note}</td>
+                            <td>${Nrs_Time}</td>
+                            <td>${data[i].Order_Status}</td>
+					  </tr>`
+            Order_table.innerHTML += row
+
+        }
+    }
+
+
+
+    $(document).ready(function () {
+        var xray_data = []
+        $("#Patiant_Case_Xray_Save").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#Patiant_Case_Xray_Save").serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'clinic:Patiant_Case_Xray_Save' %}",
+                data: formData,
+                success: function (response) {
+                    
+                    alert("Done Xray ")
+                    Patiant_xray_List()
+                    document.getElementById('Patiant_Case_xray').click();
+                    $("#Patiant_Case_Xray_Save").trigger('reset');
+                    
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+
+        })
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+  console.log('loaded')
+})
+function Patiant_xray_List() {
+    
+    visit_xray =  $('#visit_xray_id').val();
+        
+        $.ajax({
+                type: 'GET',
+                url: "{% url 'clinic:xray_visit_list' %}",
+                data: {
+                'visit_xray': visit_xray
+            },   
+                success: function (data) {
+                    $('#console2').html(data);
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+    }
+
+    window.addEventListener('load', Patiant_xray_List());
+    window.addEventListener('DOMContentLoaded', Patiant_xray_List());
+
+function myMain (evt) {
+    alert("Load");
+}
+    
+</script>
+
+
+{% endblock javascript %}

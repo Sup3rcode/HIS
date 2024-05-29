@@ -1,0 +1,11 @@
+
+<label class="control-label">Select Bed</label>
+<select name="id_bed" class="form-control" required="" id="id_bed"
+name="id_bed">
+{% for x in data %}
+{% if x.in_Use == False %}
+<option id="{{ x.id }}" value="{{ x.id }}">{{ x.Bed_Num }}
+</option>
+{% endif %}
+{% endfor %}
+</select>

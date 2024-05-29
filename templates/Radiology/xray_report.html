@@ -1,0 +1,138 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Vital Sins & Visual Tryage</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{% url 'Patient_Visits:Nurse_station_Patiant_list' %}" id="Nurse_station_Reception"> Nurse
+                            station</a></li>
+                    <li class="breadcrumb-item "><a>Vital Sins & Visual Tryage</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<style>
+    .img-medico-2 {
+        background-image: url('/static/assets/images/bg-2.jpg');
+    }
+</style>
+
+<section class="light-bg padding-top-small margin-bottom-0">
+    <div class="container margin-bottom-0">
+        <div class="posts">
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 masnory-item isotope-item">
+                    <div class="row blog">
+                        <div class="col-md-12">
+                            <div class="blog-text">
+                                <h3 class="title text-capitalize margin-bottom-0">{{data.visit_xray.patiant_no.en_patiant_name}}</h3>
+                                <h4 class="title text-capitalize margin-bottom-0">{{data.visit_xray.patiant_no.ar_patiant_name}}</h4>
+                                <ul class="meta-tags">
+                                    <li><a>Visit Date: </a><i class="fa fa-calendar"></i> <a>{{data.visit_xray.create_time |date:'d-m-Y H:m'}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Gender: </a><i class="fa fa-user"></i> <a >{% if data.visit_xray.patiant_no.gender == 1 %} MALE | ذكر {% else %} FEMALE | أنثى {% endif %}</a></li>
+                                    <li>|</li>
+                                    <li><a>Nationalty: </a><i class="fa fa-tags"></i> <a >{{data.visit_xray.patiant_no.country}}</a></li>
+                                    <li>|</li>
+                                    <li> <a>Birth Date: {{data.visit_xray.patiant_no.birth_date |date:'d-m-Y'}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+</section>
+<section class="margin-bottom-0">
+    <div class="container">
+        <ul class="media-list comments">
+            <li class="media">
+                <div class="media">
+                    <div class="media-left">
+                        <a class="thumbnail">
+                            <h3 class="text-center">1</h3>
+                        </a>
+                        <a class="btn btn-light btn-block"></a>
+                    </div>
+                    <div class="media-body">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h4 class="media-heading text-base">Diagnosis :</h4>
+                                <h4>{{data.Xray_Diagnosis}}</h4>
+                                <p><strong>Clinic Name : {{data.visit_xray.Clinic_Name.Clinic_Name}} .</strong></p>
+                                
+                                <em><i class="fa fa-clock-o"></i> {{data.create_time |date:'d-m-Y H:m'}}</em>
+                            </div>
+                        </div>
+                        <div class="panel panel-light">
+                            <div class="panel-body">
+                                <form id="Save_Report_Form" class="mb-4">
+                                    {%csrf_token%}
+                                    <div class="form-group">
+                                        <label for="inputComment" class="col-sm-2 control-label">Details : </label>
+                                        <div class="col-sm-10">
+                                            {{ Patiant_order_Xray_Form.Report_details }}
+                                        </div>
+                                        <div class="form-group has-success">
+                                            <input type="text" name="visit_xray" maxlength="120" class="form-control"
+                                                id="visit_xray" value="{{data.id}}">
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-success  btn-demo-margin-bottom"
+                                    value="Save" />
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+{% endblock %}
+{% block javascript %}
+<script>
+   $(document).ready(function () {
+       
+        $("#Save_Report_Form").submit(function (e) {
+            // preventing from page reload and default actions
+            e.preventDefault();
+            // serialize the data for sending the form data.
+            var formData = new $("#Save_Report_Form").serialize();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'clinic:Report_Xray_Save' %}",
+                data: formData,
+                success: function (response) {
+                    alert("Report Save ")
+                   
+                },
+                error: function (response) {
+                    // alert the error if any error occured
+
+                }
+
+            })
+
+        })
+    });
+</script>
+{% endblock javascript %}

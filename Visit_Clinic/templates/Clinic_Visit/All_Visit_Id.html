@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-3 text-size-20px text-weight-600 ">
+        <tbody>
+            {% with visit=data.get_patient_visit_list.get_visit %}
+            {% for All_Visits in visit %}
+            <tr>
+
+                <td>
+                    <a class="list-group-item list-group-item-info" href="#" onClick="Get_Visit_History({{ All_Visits.id }})">
+
+                        {{ All_Visits.Visit_Date |date:'d-m-Y ' }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            {%endwith%}
+        </tbody>
+    </div>
+    <div class="col-md-9 light-bg border-light padding-top-small padding-bottom-small ">
+        <!-- Begin: WIDGET -->
+        <div class="widget ">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-group accordion base" id="accordion" role="tablist" aria-multiselectable="false">
+                        <div id="Visit_id_List_his">
+
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- End: WIDGET -->
+    </div>
+</div>
+{% load static %}
+
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'assets/js/jquery_3.3.1_jquery.min.js' %}"></script>
+<script>
+
+    
+    function Get_Visit_History(id) {
+        var visit_id = id
+        $.ajax({
+            url: "{% url 'Visit_Clinic:get_visit' %}",
+            data: {
+                'visit_id' :visit_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                $("#Visit_id_List_his").empty();
+                $('#Visit_id_List_his').append(data);
+                
+            },
+
+        });
+
+        return false;
+    }
+</script>
+
+{% endblock javascript %}
+

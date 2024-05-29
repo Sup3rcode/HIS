@@ -1,0 +1,313 @@
+{% extends '_base.html' %}
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Vital Sins & Visual Tryage</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="{% url 'Patient_Visits:Nurse_station_Patiant_list' %}" id="Nurse_station_Reception"> Nurse
+                            station</a></li>
+                    <li class="breadcrumb-item "><a>Vital Sins & Visual Tryage</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+
+
+<section class="padding-top-medium padding-bottom-0">
+    <div class="container ">
+        <div class="callout light-bg text-black border-light margin-top-small margin-bottom-medium">
+            <div class="clearfix">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="margin-bottom-0 text-center">
+                                <h1 class="text-weight-700 text-uppercase">Specimens Arrival</h1>
+                                <div class="separator"><span class="short-line"></span><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-bottom-small text-center">
+                        <div class="light-bg col-xs-6 col-sm-4 ">
+                            <h4 class="text-weight-600 text-uppercase upper-heading text-black"><span
+                                    class=" text-uppercase upper-heading text-black">Total Specimens ToDay :
+                                    {{lab24}}</span></h4>
+                        </div>
+                        <div class="light-bg col-xs-6 col-sm-4 ">
+                            <h4 class="text-weight-600 text-uppercase upper-heading text-success"><span
+                                    class=" text-uppercase upper-heading text-success">Sampling status yes : {{ Sampling_status_yes }}</span></h4>
+                        </div>
+                        <div class="light-bg col-xs-6 col-sm-4 ">
+                            <h4 class="text-weight-600 text-uppercase upper-heading text-warning"><span
+                                    class=" text-uppercase upper-heading text-warning ">Sampling Status No : {{ Sampling_status_no }}</span></h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="padding-top-medium padding-bottom-0">
+  <div class="container ">
+    <div class="callout  text-black margin-top-small margin-bottom-medium">
+      <div class="clearfix">
+        <div class="col-md-12">
+          <div class="tabs-theme dark">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs text-weight-600" role="tablist">
+              <li role="presentation" class="active"><a href="#lab_list" aria-controls="services" role="tab"
+                  data-toggle="tab" aria-expanded="true">Specimens Arrival Pateiant List</a></li>
+              <li role="presentation" class=""><a href="#lab_RECEPTION" aria-controls="profile" role="tab"
+                  data-toggle="tab" aria-expanded="false">Search By Barcode</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="lab_list">
+                <div class="clearfix">
+                  <div class="col-md-12 service light">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th class="text-center" scope="col">#</th>
+                          <th class="text-center" scope="col">Patiant_no</th>
+                          <th class="text-center" scope="col">Clinic_Name</th>
+                          <th class="text-center" scope="col">Lab_Test</th>
+                          <th class="text-center" scope="col">create_time</th>
+                          <th class="text-center" scope="col">Specimens_Arrival_Status</th>
+                          <th>
+                            action
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for x in data %}
+                        <tr>
+                          <th class="text-center" scope="row">{{ x.id }}</th>
+                          <th class="text-center">{{ x.Specimens_Visit_Number.Patiant_No.ar_patiant_name }}</th>
+                          <td class="text-center">{{ x.Specimens_Visit_Number.Clinic_Name }}</td>
+                          <td class="text-center">{{ x.Tube_Test_Name.test_name }}</td>
+                          <td class="text-center">{{ x.create_time |date:'d-m-Y H:m G:i' }}</td>
+                          <td class="text-center">{{ x.is_Done }}</td>
+                          {% if x.is_Done == False %}
+                          <td class="text-center"><button class="btn btn-base" onClick="send_to_lab({{x.id}})">Send To
+                              Lab</button></td>
+                          {% else %}
+                          <td class="text-center"><button class="btn btn-base"
+                              onClick="PrintElem('{{x.barcode_img}}')">Print
+                              Barcode</button></td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+
+                </div>
+
+                <div>
+                  <ul class="pagination base">
+                    {% if data.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ data.previous_page_number }}">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <span class="page-link">Previous</span>
+                    </li>
+                    {% endif %}
+                    {% for page_num in data.paginator.page_range %}
+                    {% if data.number == page_num %}
+                    <li class="page-item active">
+                      <span class="page-link">
+                        {{ page_num }}
+                        <span class="sr-only">(current)</span>
+                      </span>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if data.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ data.next_page_number }}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                      <span class="page-link">Next</span>
+                    </li>
+                    {% endif %}
+                  </ul>
+                </div>
+
+              </div>
+              <div role="tabpanel" class="tab-pane" id="lab_RECEPTION">
+                <div class="clearfix">
+
+                  <div class="col-md-6">
+                    <!-- Begin: WIDGET -->
+                    <div class="widget margin-bottom-large">
+                      <h4 class="page-header text-weight-500 widget-title">Search</h4>
+                      <div class="search">
+                        <form class="form-inline">
+                          <div class="form-group full-width">
+                            <div class="input-group">
+                              <input type="text" class="form-control" name="Barcode_id" id="Barcode_id"
+                                placeholder="Barcode Number">
+                              <div class="input-group-btn "><button type="button" class="btn btn-base btn-block"
+                                  onClick="Barcode_Search()"><i class="fa fa-search"></i></button></div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- End: WIDGET -->
+                  </div>
+                  <div class="col-md-12 text-center base ">
+
+                  </div>
+                  <div class="col-md-12 text-center">
+                    <div class="counter-number">
+                      <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                          class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span class="short-line"></span></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 text-center" id="Search_Susses">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block javascript %}
+
+
+<script>
+
+
+
+  function send_to_lab(visit_lab) {
+
+    $.ajax({
+      type: 'GET',
+      url: "{% url 'labotory:Specimens_Reception_Send_To_lab' %}",
+      data: {
+        'visit_lab': visit_lab
+      },
+      success: function (response) {
+        location.reload();
+
+      },
+      error: function (response) {
+        // alert the error if any error occured
+
+      }
+
+    })
+  }
+ 
+</script>
+<script>
+
+
+
+  function Barcode_Search(visit_lab) {
+       
+       $.ajax({
+           type: 'GET',
+           url: "{% url 'labotory:Specimens_Reception_Send_To_lab' %}",
+           data: {
+               'visit_lab': visit_lab
+           },
+           success: function (response) {
+             location.reload(); 
+             
+           },
+           error: function (response) {
+               // alert the error if any error occured
+
+           }
+
+       })
+   }
+   function Barcode_Search() {
+    Barcode_id = $('#Barcode_id').val();
+       $.ajax({
+           type: 'GET',
+           url: "{% url 'labotory:Barcode_Search' %}",
+           data: {
+               'Barcode_id': Barcode_id
+           },
+           success: function (data) {
+            $('#Search_Susses').html(data);
+             
+           },
+           error: function (response) {
+               // alert the error if any error occured
+
+           }
+
+       })
+   }
+  function printPage(img_id) {
+       
+    $('#print-img').show(img_id);
+             window.print(img_id);
+             return false;
+    }
+</script>
+<script>
+  function PrintElem(id)
+  {
+    var box = document.getElementById(id)
+    var uu = 'http://' + window.location.host + '/media/';
+    var img = uu+id
+   
+  var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+  mywindow.document.write('<dev>');
+  mywindow.document.write("<img src='"+ img +"' />");
+  mywindow.document.close('</dev>'); // necessary for IE >= 10
+  mywindow.focus(); // necessary for IE >= 10*/
+  mywindow.print();
+  mywindow.close();
+  }
+
+  function swipe() {
+   var largeImage = document.getElementById('largeImage');
+   largeImage.style.display = 'block';
+   largeImage.style.width=200+"px";
+   largeImage.style.height=200+"px";
+   var url=largeImage.getAttribute('src');
+   window.open(url,'Image','width=largeImage.stylewidth,height=largeImage.style.height,resizable=1');
+}
+
+  </script>
+{% endblock javascript %}

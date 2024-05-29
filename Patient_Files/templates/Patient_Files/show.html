@@ -1,0 +1,7 @@
+{% if data1.image %}
+<a href="{% url 'Patient_Files:order_pdf' data1.Patiant_No.id %}" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+    target="_blank">
+    Show Files</a>
+{% else %}
+<span class="text-muted"></span>
+{% endif %}

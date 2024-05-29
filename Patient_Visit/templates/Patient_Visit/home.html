@@ -1,0 +1,332 @@
+{% extends '_base.html' %}
+
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Clinic Reception</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li class="breadcrumb-item "><a>Clinic Reception</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+
+<section class="light-bg padding-top-large padding-bottom-large">
+
+
+
+    <style>
+        #ER_Reception_File_NO {
+            width: 10%;
+        }
+        #id_country {
+            width: 100%;
+        }
+    </style>
+    <div class="container-fluid padding-right-large padding-left-large  padding-top-large padding-bottom-large">
+
+        <div class="tabs-theme dark">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs text-weight-600" role="tablist">
+                <li role="presentation" class="active"><a href="#CreatePatiantFile" aria-controls="services" role="tab"
+                        data-toggle="tab" aria-expanded="true">ER Reception</a></li>
+                <li role="presentation" class=""><a href="#ER_RECEPTION" aria-controls="profile" role="tab"
+                        data-toggle="tab" aria-expanded="false">Create Patiant File</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="CreatePatiantFile">
+                    <div class="clearfix">
+                        
+                        <div class="row  padding-top-small padding-bottom-small  ">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 light-bg service light  text-weight-700">
+
+                                <form id="Send_Pateiant_To_Clinic">
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-2 col-md-2">
+                                    
+    
+                                                <div class="form-group has-success">
+                                                    <input type="hidden" name="File_id" maxlength="200" class="form-control" id="File_id">
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                          </div>
+                                        
+                                      </div>
+
+                                    <div class="row">
+                                        {% csrf_token %}
+                                        <div class="col-md-6 col-md-4">
+                                            
+                                            <label class="control-label">Search By ID or AR Name</label>
+                                            <div class="form-group has-success">
+                                                {{ Reception_Pateint_Visit_Form.Patiant_No }}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-md-4">
+                                            
+                                            <label class="control-label">Patiant Mode</label>
+                                            <div class="form-group has-success">
+                                                {{ Reception_Pateint_Visit_Form.Patiant_Mode }}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-md-4">
+                                            
+                                            <label class="control-label">Clinic Name</label>
+                                            <div class="form-group has-success">
+                                                {{ Reception_Pateint_Visit_Form.Clinic_Name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container">
+                                        <div class="col-md-12">
+                                            <div class="col-md-8">
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="col text-center">
+                                                    <br>
+                                                    <br>
+                                                    <input type="submit" class="btn btn-success  btn-demo-margin-bottom" id="clinic_reception" value="Send To Clinic" disabled="">
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                                
+                            </div>
+                            <div class="col-md-2"></div>
+                            
+                        </div>
+                        <div class="container padding-top-0 padding-bottom-large white-bg border-light">
+                            <div id="Pateint_d" class="col-md-12  " >
+                                        
+                                <div class="col-md-6 col-md-3">
+                            
+                                    <label class="control-label">Social number</label>
+                                    <div class="form-group has-success">
+                                        <input type="text" name="social_number" maxlength="200" class="form-control" id="social_number"disabled>
+                                    </div>
+                                </div>
+                                
+                         
+                            
+                            
+                                <div class="col-md-6 col-md-3">
+                                    
+                                    <label class="control-label">Ar patiant name</label>
+                                    <div class="form-group has-success">
+                                        <input type="text" name="ar_name" maxlength="200" class="form-control" id="ar_name"disabled>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-6 col-md-3">
+                                    
+                                    <label class="control-label">En patiant name</label>
+                                    <div class="form-group has-success">
+                                        <input type="text" name="en_patiant_name" maxlength="200" class="form-control" id="en_patiant_name"disabled>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6 col-md-2">
+                                    
+                                    <label class="control-label">Birth date</label>
+                                    <div class="form-group has-success">
+                                        <input type="text" name="id_birth_date" maxlength="200" class="form-control" id="id_birth_date" disabled>
+                                    </div>
+                                
+                                </div>
+                                
+                        
+                            
+                        </div>
+                        </div>
+                    </div>
+                    
+                        <div id="Patiant_24H">
+                            
+                        </div>
+                   
+                </div>
+                <div role="tabpanel" class="tab-pane" id="ER_RECEPTION">
+                    <div class="clearfix">
+                        
+                        <div class="col-md-12 text-center base ">
+                            <form id="Create_new_FILE">
+                                
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div id="place-for-mr-special"></div>
+        </div>
+        
+      </div>
+    
+  </div>
+
+<div class="row">
+    
+
+
+    {% csrf_token %}
+    {% for field in Patiant_File_NO_Form %}
+    <div class="col-md-6 col-md-4">
+        
+        <label class="control-label" >{{ field.label }}</label>
+        <div class="form-group has-success">
+            {{ field }}
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class = "col text-center">
+                <br>
+                <br>
+                <input type="submit" class="btn btn-success  btn-demo-margin-bottom" id="create_patiant_file" value="Create Patiant file" />
+                <input type="button" class="btn btn-base  btn-demo-margin-bottom" id="add_new_Patiant_file" onclick="add_new_patiant_file()" value="add new Patiant file" />
+
+            </div>
+        </div>
+    </div>
+</div>
+                            </form>
+
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="countersDark">
+                    <div class="clearfix">
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <i class="fa fa-rocket text-size-40px"></i>
+                                <div class="counternumber text-weight-300 animate margin-top-small margin-bottom-small slideUp"
+                                    data-animation="slideUp" data-from="0" data-to="1400" data-speed="1500"></div>
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+                                <p>Projects Completed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <i class="fa fa-trophy text-size-40px"></i>
+                                <div class="counternumber text-weight-300 animate margin-top-small margin-bottom-small slideUp"
+                                    data-animation="slideUp" data-from="0" data-to="80" data-speed="1500"></div>
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+                                <p>Awards Won</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% block javascript %}
+<script>
+    
+</script>
+{% include 'Patient_Visit/visit_js.html' %}
+
+<script>
+    $(function () {
+        $("#Clinic_Reception_File_NO").autocomplete({
+            
+            source: function (request, response) {
+                
+                $.ajax({
+                    url: "/files/api/File_NO_list/?search=" + request.term,
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.slice(0, 10), function (item) {
+                            return {
+                                label: item.ar_patiant_name,
+                                ar_patiant_name: item.ar_patiant_name,
+                                en_patiant_name: item.en_patiant_name,
+                                patiant_no: item.patiant_no,
+                                social_number: item.social_number,
+                                File_id: item.id,
+                                birth_date: item.birth_date,
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                
+                $("#search-id").val(ui.item.patiant_no);
+                $("#Clinic_Reception_File_NO").val(ui.item.label);
+                $("#File_id").val(ui.item.File_id);
+                $("#id_patiant_no").val(ui.item.patiant_no);
+                $("#id_birth_date").val(ui.item.birth_date);
+                $("#ar_name").val(ui.item.ar_patiant_name);
+                $("#en_patiant_name").val(ui.item.en_patiant_name);
+                $("#social_number").val(ui.item.social_number);
+                $("#clinic_reception").attr("disabled", true);
+                document.getElementById("Pateint_d").style.visibility = "visible";
+                
+                return false;
+                
+            },
+        });
+    });
+    document
+    .getElementById("id_Patiant_Mode")
+    .addEventListener("change", function () {
+      var id = $("#File_id").val();
+      // create an AJAX call
+      Cheack_Visit(id)
+
+      return false;
+    });
+    document
+    .getElementById("id_Clinic_Name")
+    .addEventListener("change", function () {
+      var id = $("#File_id").val();
+      // create an AJAX call
+      Cheack_Visit(id)
+
+      return false;
+    });
+    
+</script>
+
+{% endblock javascript %}

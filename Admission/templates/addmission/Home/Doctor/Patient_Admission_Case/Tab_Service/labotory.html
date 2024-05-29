@@ -1,0 +1,33 @@
+<div class="clearfix">
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('CHEM' , {{data.id}})">CHEM</button>
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('BACT', {{data.id}})">BACT</button>
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('VIRO', {{data.id}})">VIRO</button>
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('SERO', {{data.id}})">SERO</button>
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('HEMA' , {{data.id}})">HEMA</button>
+    <button type="button" class="btn btn-base  btn-demo-margin-bottom box-shadow-active"
+        onClick="lab_list('hormon', {{data.id}})">hormon</button>
+
+</div>
+<form id="patiant_no_lab_form">
+    <input type="hidden" name="visit_Order_id" maxlength="120" class="form-control"
+        id="visit_Case_id" value="{{data.id}}">
+    <input type="hidden" name="patiant_no" maxlength="120" class="form-control"
+        id="patiant_no_lab" value="{{data.Patiant_No.id}}">
+</form>
+<div class="well box-shadow-active">
+    <dev>
+        <input type="hidden" name="visit_Case_id" maxlength="120" class="form-control"
+            id="lab_tybe_id">
+    </dev>
+    <div class="row checklist" id="labotory_list">
+
+    </div>
+    <button type="button"
+        class="btn btn-base text-weight-700 text-uppercase btn-demo-margin-bottom"
+        id="btn-tst">Send</button>
+</div>

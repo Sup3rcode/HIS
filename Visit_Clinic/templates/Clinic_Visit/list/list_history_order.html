@@ -1,0 +1,37 @@
+<h4> Order Case List</h4>
+<table class="table table-striped padding-top-medium box-shadow-active">
+    <tr class="bg-info">
+        <th>Order No</th>
+        <th>Order_Time</th>
+        <th>Dr_Order</th>
+        <th>Doctor</th>
+        <th>Nurse_Note</th>
+        <th>Nurse_Result_Time</th>
+        <th>Order_Status</th>
+    </tr>
+    <tbody >
+        {% for x in Visit_order %}
+        <tr>
+            <th>{{ x.id }}</th>
+            <td>{{ x.ins_user_date |date:'d-m-Y G:i' }}</td>
+            <td>{{ x.Dr_Order }}</td>
+            <td>{{ x.ins_user_code.first_name }}</td>
+            <td>{{ x.Nurse_Note }}</td>
+            <td>{{ x.Nurse_Result_Time |date:'d-m-Y G:i' }}</td>
+            <td>{{ x.order_status }}</td>
+            <td>
+                {% if x.order_status == True %}
+                {% if x.Visit_Files %}
+                <a href="#" class="btn btn-base  btn-demo-margin-bottom box-shadow-active" target="_blank">
+              Show Files</a>
+              {% else %}
+              <span class="text-muted"></span>
+             {% endif %}
+             {% endif %}
+              </td> 
+
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

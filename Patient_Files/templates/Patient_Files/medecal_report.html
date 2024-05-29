@@ -1,0 +1,480 @@
+{% extends '_base.html' %}
+
+
+{% block breadcrumb %}
+
+
+    
+<section class="page-main-heading padding-top-0 padding-bottom-0">
+  <div class="container">
+    <div class="row">
+
+            <div class="margin-top-small  margin-bottom-small ">
+                <h3 class="text-weight-700 text-uppercase upper-heading text-base">Clinic Reception</h3>
+
+            </div>
+            <div class="col-md-4 col-sm-4 text-right breadcrumb-setting">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'App_Home:index' %}"><i class="fa fa-home"></i> Home</a></li>
+                    <li class="breadcrumb-item "><a>Clinic Reception</a></li>
+                </ol>
+            </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+{% load static %}
+
+<section class="light-bg padding-top-large padding-bottom-large">
+
+
+
+    <style>
+        #ER_Reception_File_NO {
+            width: 10%;
+        }
+        #id_country {
+            width: 100%;
+        }
+    </style>
+    <div class="container  padding-top-large padding-bottom-large">
+
+        <div class="tabs-theme dark">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs text-weight-600" role="tablist">
+                <li role="presentation" class="active"><a href="#scanner_files" aria-controls="services" role="tab"
+                        data-toggle="tab" aria-expanded="true">scanner_files</a></li>
+                <li role="presentation" class=""><a href="#Search_files" aria-controls="profile" role="tab"
+                        data-toggle="tab" aria-expanded="false">Search_files</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="scanner_files">
+                    <div class="clearfix">
+                        
+                        <div class="row light-bg padding-top-small padding-bottom-small box-shadow-active smaller ">
+
+
+                            <div class="col-md-12 service light  text-weight-600">
+
+                                <form id="Medecal_Report">
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col-md-12">
+                                                <div class="col-md-2 col-md-2">
+                                    
+    
+                                                    <div class="form-group has-success">
+                                                        <input type="text" name="File_id" maxlength="200" class="form-control" id="File_id" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-md-4">
+                                            
+                                                <label class="control-label">Search By ID or AR Name</label>
+                                                <div class="form-group has-success">
+                                                    <input type="text" name="Search_id" class="form-control ui-autocomplete-input" id="Search_id" required="" autocomplete="off">
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                          </div>
+                                        
+                                      </div>
+
+                                    <div class="row">
+                                        <div id="Pateint_d" class="col-md-12  padding-top-small padding-bottom-small white-bg border-light" >
+                                            <div class="col-md-6 col-md-2">
+                                            
+                                                <label class="control-label">File No :</label>
+                                                <div class="form-group has-success">
+                                                    <input type="text" name="File_no_num" maxlength="200" class="form-control" id="File_no_num" disabled>
+                                                </div>
+                                            </div>
+                                                
+                                            
+                                            <div class="col-md-6 col-md-3">
+                                            
+                                                    <label class="control-label">Social number</label>
+                                                    <div class="form-group has-success">
+                                                        <input type="text" name="social_number" maxlength="200" class="form-control" id="social_number" disabled>
+                                                    </div>
+                                                </div>
+
+                                            <div class="col-md-6 col-md-3">
+                                                
+                                                <label class="control-label">Ar patiant name</label>
+                                                <div class="form-group has-success">
+                                                    <input type="text" name="ar_name" maxlength="200" class="form-control" id="ar_name"disabled>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-md-3">
+                                                
+                                                <label class="control-label">En patiant name</label>
+                                                <div class="form-group has-success">
+                                                    <input type="text" name="en_patiant_name" maxlength="200" class="form-control" id="en_patiant_name"disabled>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6 col-md-2">
+                                                
+                                                <label class="control-label">Birth date</label>
+                                                <div class="form-group has-success">
+                                                    <input type="text" name="id_birth_date" maxlength="200" class="form-control" id="id_birth_date" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                    
+                                    </div>
+                                </form>
+                                
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="container">
+                                        <div class="row" id="th_container">
+                                            <div class="col-md-12 mb-1 text-secondary" id="th_container_empty">No scanned images</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                {% csrf_token %}
+                                                <button class="btn btn-primary" id="btn-scan">Scan</button>
+                                                <button class="btn btn-primary" id="btn-files" onclick="Get_Files_ID()" >Show</button>
+                                                
+                                                
+                                                <button class="btn btn-success" id="btn-upload" style="display:none;">Upload image(s)</button>
+                                                <p class="text-danger mt-1" id="download-app" style="display:none;">No Scan app application found in your machine. Please download, install and open first then refresh the browser. <a href="{% static '24Care-Scanner.exe'  %}" download>Download app</a></p>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    
+                    
+                    
+                </div>
+                <div role="tabpanel" class="tab-pane" id="Search_files">
+                    <div class="clearfix">
+                        
+                        <div class="col-md-12 text-center base ">
+
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="countersDark">
+                    <div class="clearfix">
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <i class="fa fa-rocket text-size-40px"></i>
+                                <div class="counternumber text-weight-300 animate margin-top-small margin-bottom-small slideUp"
+                                    data-animation="slideUp" data-from="0" data-to="1400" data-speed="1500"></div>
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+                                <p>Projects Completed</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <div class="counter-number">
+                                <i class="fa fa-trophy text-size-40px"></i>
+                                <div class="counternumber text-weight-300 animate margin-top-small margin-bottom-small slideUp"
+                                    data-animation="slideUp" data-from="0" data-to="80" data-speed="1500"></div>
+                                <div class="separator"><i class="short-line"></i><i class="fa fa-circle-o"></i><i
+                                        class="fa fa-circle"></i><i class="fa fa-circle-o"></i><span
+                                        class="short-line"></span></div>
+                                <p>Awards Won</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% block javascript %}
+<script>
+    
+</script>
+
+
+<script>
+    
+   
+    $(function () {
+        $("#Search_id").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/files/api/File_NO_list/?search=" + request.term,
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.slice(0, 10), function (item) {
+                            return {
+                                label: item.ar_patiant_name,
+                                ar_patiant_name: item.ar_patiant_name,
+                                en_patiant_name: item.en_patiant_name,
+                                patiant_no: item.patiant_no,
+                                social_number: item.social_number,
+                                File_id: item.id,
+                                birth_date: item.birth_date,
+                            };
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                document.getElementById("btn-scan").style.visibility = "visible";
+                document.getElementById("btn-files").style.visibility = "visible";
+                document.getElementById("Pateint_d").style.visibility = "visible";
+                $("#Search_id").val("");
+                $("#File_no_num").val(ui.item.patiant_no);
+                
+                $("#Clinic_Reception_File_NO").val(ui.item.label);
+                $("#File_id").val(ui.item.File_id);
+                $("#id_patiant_no").val(ui.item.patiant_no);
+                $("#id_birth_date").val(ui.item.birth_date);
+                $("#ar_name").val(ui.item.ar_patiant_name);
+                $("#en_patiant_name").val(ui.item.en_patiant_name);
+                $("#social_number").val(ui.item.social_number);
+                return false;
+                
+                
+               
+            },
+        });
+    });
+   
+    window.URL = window.URL || window.webkitURL;
+      
+      document.addEventListener('DOMContentLoaded', function(){
+          var select_images_input = document.getElementById("select_images_input"),
+              th_container = document.getElementById("th_container"),
+              btn_scan = document.getElementById("btn-scan"),
+              download_app = document.getElementById("download-app"),
+              btn_upload = document.getElementById("btn-upload");
+              btn_files = document.getElementById("btn-files");
+              
+          var i = 0;
+          var wsImpl = window.WebSocket || window.MozWebSocket;
+          window.ws = new wsImpl('ws://localhost:8181/');
+          ws.onmessage = function(e){
+              if (e.data instanceof Blob){
+                  i++;
+                  document.getElementById("th_container_empty").style.display = 'none';
+                  document.getElementById("btn-upload").style.display = '';
+                  var th_img_id = "upl_image" + i;
+                  createThumbnail(th_container, th_img_id, "Scan "+i);
+                  appendImage(e.data, th_img_id);
+              }
+          };
+          ws.onopen = function(){
+              btn_scan.removeAttribute('disabled');
+              download_app.style.display = 'none';
+          };
+          ws.onerror = function(e){
+              btn_scan.setAttribute('disabled', '');
+              download_app.style.display = '';
+          }
+    
+          btn_scan.addEventListener('click', function(){
+              ws.send("1100");
+          }, false);
+    
+          btn_upload.addEventListener('click', function(){
+              btn_upload.style.display = 'none';
+              Array.from(document.querySelectorAll("img.th_img")).forEach(e => { uploadImage(e); });
+              
+              
+          }, false);
+         
+      });
+    
+      document.addEventListener('click',function(e){
+          if (e.target && e.target.className == 'th_rotate') {
+              var c = document.createElement('canvas');
+              var ctx = c.getContext('2d');
+              var src_img = e.target.previousElementSibling;
+              var img = new Image();
+              img.src = src_img.src;
+              img.onload = function() {
+                  imgWidth = img.width;
+                  imgHeight = img.height;
+                  c.width = imgHeight;
+                  c.height = imgWidth;
+                  ctx.translate(c.width/2, c.height/2);
+                  ctx.rotate(90*Math.PI/180);
+                  ctx.translate(-c.height/2, -c.width/2);
+                  ctx.drawImage(img, 0, 0);
+                  c.toBlob(function(blob){
+                      window.URL.revokeObjectURL(src_img.src);
+                      src_img.src = window.URL.createObjectURL(blob);
+                  }, "image/jpeg", 0.9);
+              }
+          }
+      });
+    
+      function createThumbnail(container, th_img_id, caption){
+          var col = document.createElement("div");
+          col.className = "col-md-4";;
+          container.appendChild(col);
+    
+          var th = document.createElement("div");
+          th.className = "card mb-4 shadow-sm text-center";
+          col.appendChild(th);
+    
+          var th_img = document.createElement("img");
+          th_img.style.width='150px';
+          th_img.className = "card-img-top th_img";
+          th_img.id = th_img_id;
+          th_img.width = 150;
+          th.appendChild(th_img);
+    
+          var th_rotate = document.createElement("div");
+          th_rotate.className = "th_rotate";
+          th.appendChild(th_rotate);
+    
+          var info = document.createElement("div");
+          info.className = "card-body";
+          info.innerHTML = caption;
+          th.appendChild(info);
+    
+          var prg = document.createElement("div");
+          prg.className = "progress th_progress";
+          prg.innerHTML = "<div class=\"progress-bar bg-warning\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>";
+          th.appendChild(prg);
+    
+          var th_remove = document.createElement("button");
+          th_remove.className = "close text-danger th_remove";
+          th_remove.setAttribute("type", "button");
+          th_remove.setAttribute("aria-label", "Remove");
+          th_remove.innerHTML = "<span aria-hidden=\"true\">&times;</span>";
+          th.appendChild(th_remove);
+    
+          th_remove.addEventListener("click", function(e){
+              e.target.parentNode.parentNode.parentNode.remove();
+          }, false);
+      }
+    
+      function appendImage(file, img_id, maxSizeWH = 3000){
+          function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+              var ratio = [maxWidth / srcWidth, maxHeight / srcHeight ];
+              ratio = Math.min(ratio[0], ratio[1]);
+              return { width:srcWidth*ratio, height:srcHeight*ratio };
+          }
+          var img = new Image();
+          img.src = window.URL.createObjectURL(file);
+          img.onload = function(){
+              var c = document.createElement('canvas');
+              if ((this.naturalWidth < maxSizeWH) && (this.naturalHeight < maxSizeWH)){
+                  var new_dimensions = {width:this.naturalWidth, height:this.naturalHeight};
+              }else{
+                  var new_dimensions = calculateAspectRatioFit(this.naturalWidth, this.naturalHeight, maxSizeWH, maxSizeWH);
+              }
+              c.width = new_dimensions.width;
+              c.height = new_dimensions.height;
+              c.getContext('2d').drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight, 0, 0, new_dimensions.width, new_dimensions.height);
+              c.toBlob(function(blob){
+                  document.getElementById(img_id).src = window.URL.createObjectURL(blob);
+              }, "image/jpeg", 0.9);
+              c.remove();
+          }
+          img.remove();
+      }
+    
+      function uploadImage(src_img){
+          fetch(src_img.src).then(i=>i.blob()).then(function(imageBlob){
+              var fd = new FormData();
+              var File_No_number= $("#File_id").val();
+              fd.multiples = true;
+              fd.append("blob", imageBlob);
+              fd.append("File_id", File_No_number);
+              var xhr = new XMLHttpRequest();
+              xhr.addEventListener("loadstart", function(e){
+                  var siblings = [].slice.call(src_img.parentNode.children) // convert to array
+                      .filter(function(v) { return v !== src_img }) // remove element itself
+                      .forEach(function(el){
+                          if (el.className == "th_rotate" || el.className == "close th_remove") el.remove();
+                          if (el.className == "progress th_progress") el.style.display = "flex";
+                      });
+              }, false);
+              xhr.upload.addEventListener("progress", function(e) {
+                  if (e.lengthComputable) {
+                      var percentage = Math.round((e.loaded*100)/e.total);
+                      src_img.nextSibling.nextSibling.firstChild.style.width = percentage+'%';
+                      src_img.nextSibling.nextSibling.firstChild.setAttribute("aria-valuenow", percentage);
+                  }
+              }, false);
+              xhr.onreadystatechange = function(){
+                  if (xhr.readyState == 4 && xhr.status == 200){
+                      var r = xhr.responseText;
+                    
+                      src_img.classList.remove("th_img")
+                      var caption = document.getElementById(src_img.id).nextSibling;
+                      caption.innerHTML = "Done!";
+                      src_img.removeAttribute("id");
+                  }
+              }
+              xhr.open("POST" , "{% url 'Patient_Files:Save_Scan_Images'  %}");
+              xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+              xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+              xhr.send(fd);
+             
+              
+          });
+      }
+      function Get_Files_ID() {
+
+        var get_id = $("#File_id").val();
+        $.ajax({
+            url: "{% url 'Patient_Files:validate_patient_pdf_file_id'  %}",
+            data: {
+                'get_id' :get_id
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken == false) {
+                    
+                    cosyAlert('<strong>Error</strong><br />' + data.error_message, 'error', { vPos: 'middle', hPos: 'center' });
+                } else {
+                    
+                    var get_id = $("#File_id").val();
+                var get_id_url = '/files/pateint/pdf/'+get_id;
+                window.open(get_id_url, '_blank');
+                }
+                
+            },
+
+        });
+       
+    }
+    window.onload = function () {
+        document.getElementById("btn-scan").style.visibility = "hidden";
+        document.getElementById("btn-files").style.visibility = "hidden";
+        document.getElementById("Pateint_d").style.visibility = "hidden";
+  }  
+</script>
+
+{% endblock javascript %}

@@ -1,0 +1,43 @@
+{% for line in data %}
+            <tr id="visit_xray">
+                <td>{{ line.id }}</td>
+                
+                <td><a href="{% url 'Visit_Clinic:xray_report_view' line.id %}">{{ line.visit_Case.patiant_no }}</a></td>
+                
+                <th>{{ line.visit_Case.patiant_no.ar_patiant_name }}</th>
+                <td>{{ line.Xray_type }}</td>
+                <td>{{ line.Xray_Site.Xray_Site }}</td>
+                <td>{{ line.Status_Reception_time |date:'d-m-Y' }}</td>
+                <td>{{ line.visit_Case.Clinic_Name }}</td>
+                {% if line.xray_status == 'Waiting Reception' %}
+                <td class="danger">Waiting Reception</td>
+                <th>
+                    <button class="btn btn-base" onClick="lasto({{line.id}})" data-toggle="modal"
+                        data-target="#myModal">assign to radiologist</button>
+                </th>
+                {% elif line.xray_status == 'Waiting Report' %}
+                <td class="warning">Waiting Report </td>
+                
+                <th>
+                    <small>assign: {{ line.Status_Reception_time |date:'d-m-Y H:m'}}</small>
+                </th>
+                {% else %}
+                <td class="success">Reported</td>
+                <th>
+                    <button class="btn btn-base disabled">assign to radiologist</button>
+                </th>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+            {% for line in data %}
+            <div style="display:inline-block">
+                <label>Currently working here?</label>
+                <a href="{% url 'Visit_Clinic:xray_report_view' line.id %}">
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </a>
+              </div>
+              {% endfor %}

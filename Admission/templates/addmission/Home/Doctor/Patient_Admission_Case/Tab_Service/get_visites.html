@@ -1,0 +1,77 @@
+<div  class="padding-top-small padding-right-small padding-left-small padding-bottom-small margin-bottom-0 box-shadow-active">
+    <h4>History </h4>
+    <table class="table table-striped ">
+        <tr class="bg-info">
+            <th>History</th>
+            <th>Diagnosis</th>
+            <th>Examination</th>
+            <th>Examination</th>
+            <th>Doctor</th>
+            <th>Visit Case Date</th>
+            
+        </tr>
+
+        <tbody id="Case_History_Table_id">
+            {% for x in Visit_History_id %}
+            <tr>
+                <td>{{x.History}}</td>
+                <td>{{x.Diagnosis}}</td>
+                <td>{{x.Examination}}</td>
+                <td>{{x.Doctor_Note}}</td>
+                <td>{{x.ins_user_code.first_name}}</td>
+                <td>{{x.ins_user_date |date:'d-m-Y G:i'}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<hr>
+<div  class="padding-top-small padding-right-small padding-left-small padding-bottom-small margin-bottom-0 box-shadow-active">
+    <h4>Xray </h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                
+                <th>ID</th>
+                <th>type</th>
+                <th>Site</th>
+                <th>create time</th>
+                <th>Diagnosis</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody >
+            {% for line in Visit_xray %}
+            <tr id="visit_xr">
+                
+                <th >{{ line.id }}</th>
+                <td>{{ line.Xray_type.Xray_type }}</td>
+                <td>{{ line.Xray_Site.Xray_Site }}</td>
+                <td>{{ line.ins_user_date |date:'d-m-Y G:i' }}</td>
+                <td>{{ line.Xray_Diagnosis }}</td>
+                {% if line.xray_status == 'Waiting Reception' %}
+                <td class="danger">Waiting Reception</td>
+                
+                {% elif line.xray_status == 'Waiting Report' %}
+                <td class="warning">Waiting Report </td>
+                
+                <th>
+                    <small>assign: {{ line.Status_Reception_time |date:'d-m-Y H:m G:i'}}</small>
+                </th>
+                {% else %}
+                <td  >            <button class="btn btn-base" onClick="shoe_rep({{line.id}})">Show Report</button>
+                </td>
+                {% endif %}
+    
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+</div>

@@ -1,0 +1,22 @@
+
+<body>
+    
+{{emp.id}}
+<div class="row mb-3">
+    <label  class="form-label"><strong>Patiant No :</strong> {{emp.patiant_no}}</label>
+    
+  </div>
+  <div class="row mb-3">
+    <label class="form-label"><strong>Patiant Name : </strong>{{emp.en_patiant_name}}</label>
+  </div>
+    <hr>
+    {% for x in pdf %}
+
+  {% if x.image %}    
+
+              <p><img src="{{  x.image.path }}"></p>
+  {% endif %}
+  {% endfor %}
+
+  
+  </body>
